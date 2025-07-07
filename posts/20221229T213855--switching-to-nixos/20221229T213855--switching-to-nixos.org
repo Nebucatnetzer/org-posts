@@ -1,0 +1,63 @@
+#+title: Switching to NixOS
+#+date: [2022-12-29 Thu 21:38]
+#+filetags:
+#+identifier: 20221229T213855
+#+author: Andreas Zweili
+
+* 2022-01-17 switching to NixOS
+
+A few months ago a friend showed me a Linux distribution called NixOS.
+I was immediately hooked by the idea.
+The two things that intrigued me the most where:
+
+- The ability to apply a configuration and role it back through so
+  called generations.
+- That NixOS is configured in a declarative way. This means that you
+  write a configuration first and then execute a command which then
+  builds the system according to the configuration.
+
+Especially the last one was the main reason why I wanted to try it. I
+tried to configure my systems a lot with Ansible but I often run
+into the problem that I didn't implement a change and then I wasn't able
+to rebuild systems or that the state between systems was inconsistent.
+In addition with Ansible you don't have an easy option to remove things.
+You basically you have to do the tasks in reverse in order to remove the
+old configuration. With Docker it got a bit easier to have a consistent
+state on my servers but on my laptop I was still forgetting to update
+the Ansible role.
+
+When my friend told me how NixOS worked it just made so much more sense.
+The fact that the configuration is symlinked read-only to the required
+places just forces you do use the system in the right way. And the
+declarative way makes it much easier to have a consistent configuration
+across various machines and applying that configuration to other
+machines is as easy as running =git pull && sudo NixOS-rebuild switch=
+on the remote machines.
+
+** Idle Resource Usage
+
+Another thing I noticed after a few test, was that the idle resource
+usage of NixOS was much lower than what I've seen so far from Ubuntu
+or Debian. Both systems in the screenshot are running the same
+application in Docker but the resource usage is wildly different.
+
+*Ubuntu*
+[[file:2022-01-08_ubuntu_performance.png]]
+
+*NixOS*
+[[file:2022-01-08_nixos_performance.png]]
+
+** Future
+
+Going forward there are still a lot of things I plan on doing:
+
+1. Migrate all my servers to NixOS.
+2. Continue working on my config for my desktop systems (I expect this
+   to be an ongoing process).
+3. Try to setup development environments. One thing NixOS or more
+   specific Nix can do is install applications which are only available
+   in a specific directory. In addition you can specify the exact
+   version of the application you use for developing. This makes it very
+   easy to continue working on a project at a later point e.g. for bug
+   fixing or other tasks.
+4. I'm sure there is much more :D

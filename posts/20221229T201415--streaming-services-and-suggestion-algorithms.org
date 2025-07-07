@@ -1,0 +1,61 @@
+#+title: Streaming services and suggestion algorithms
+:preamble:
+#+date: [2022-12-29 Thu 20:14]
+#+filetags:
+#+identifier: 20221229T201415
+#+author: Andreas Zweili
+#+latex_header: input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:end:
+
+My first streaming service was Google Play Music. It was at the time the only service wich let you upload your own music.
+This was at the time very important to me because I had a lot of music wich wasn't yet on any of the streaming platforms.
+For convenience I would still prefer if a service would provide this feature.
+However today it is less of a problem because the music catalogues are much larger and with my Plex server I have always access to the songs wich can't be found on the streaming platforms.
+
+When Play Music shut down I tested a lot of different services and landed in the end on Spotify.
+In hindsight YouTube Music might have been the better fit because I get so used to the way Play Music works with playlists and queues.
+Spotify just always manages me in this regard.
+
+A problem all the services have in common is their recommendations.
+I listen mostly to Metal .
+Like really a lot.
+Sometimes I listen to something else like Classic, Pop, Folk or country.
+However 95% of the times it's Metal.
+One special case is my a "Good Night" playlist wish contains only contains quiet songs.
+Only two aren't from a metal band though.
+
+Towards the end of Play Music I started to feel like they found an algorithm that was working for me .
+I got get recommendations for the things I liked while discovering new and interesting music related to my genre.
+But it took them a long time.
+
+When you first make an account for Youtube Music they have a feature wich lets you choose from a list of artists, the ones you like. After you've chosen an artist they then expand the list with other artists they think you might like.
+The problem is that the list provides very few metal bands to begin with and if you actually like one of the artists the new additions don't really seem to related that much with the previous artist.
+So if you're listening to a niche genre you can't really drill down into it.
+They just show you the successful bands for that genre and then stop.
+This gets even worse when you select an old time classic like Johnny Cash or Elvis.
+Then they push you realy hard in to that category.
+
+Wich lets me move over to Spotify.
+While they seem to have an algorithm wich understands the genres you're listening to.
+They weigh it totally wrong.
+Even though Metal is the mast majority of my music as soon as I start to listen to one song from, for example, the pop genre they start to push that very hard.
+Like really hard.
+Of the 6 daily playlists they generate for you two of mine are heavily geared towards pop music.
+Wich is just way too much.
+And don't even try to listen to something like Scooter only while working out.
+That will throw of the recommendations even more.
+The most frustrating part is that you can't really control it.
+They give you the option to not play an artist but not to not recommend it.
+Wich are two separate things. Maybe I want to listen to Scooter for working out but that doesn't mean that I like the entire genre. Especially since I only listen to that single artist.
+Another problem with Spotify is their heavy reliance on popular songs.
+You can have a band with 400 songs and they're still going to recommend you only the top two songs over and over again.
+To make matters worse the top few songs are often ballades.
+Great fun if the band is usually playing much harder stuff.
+Not that I want to hate on ballads its just annoying if a band has a much greater repertoir and you're stuck with the same songs over and over again.
+
+I experience similar problems with the normal version of YouTube.
+Even though they are not that pronounced.
+There the main problem is that new videos from my subscriptions don't get recommended but all the old stuff I've already seen.
+
+In the end I feel like the algorithms had a really hard time understanding the wide variety of human taste.
+Which in turn leads me to ask for more control over the way stuff gets presented to me.

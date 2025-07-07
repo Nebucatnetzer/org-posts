@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1751792365,
+        "narHash": "sha256-J1kI6oAj25IG4EdVlg2hQz8NZTBNYvIS0l4wpr9KcUo=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1fd8bada0b6117e6c7eb54aad5813023eed37ccb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "org-publish-rss": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1747276108,
+        "narHash": "sha256-3os8jBMHfZLrc/Ot5ZFVSFzzoZ2ogGB/zZaJ33ia+Rg=",
+        "ref": "refs/heads/master",
+        "rev": "7f7d1e0c2c777015b81362a3292a3c851b939913",
+        "revCount": 60,
+        "type": "git",
+        "url": "https://git.sr.ht/~taingram/org-publish-rss"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.sr.ht/~taingram/org-publish-rss"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "org-publish-rss": "org-publish-rss"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

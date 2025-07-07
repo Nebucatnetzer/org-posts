@@ -1,0 +1,67 @@
+* org-posts
+
+This repository contains my blog posts in org mode format and a build system to generate the HTML.
+
+In addition it provides a script to sync the files to a given server.
+
+** Usage
+
+Copy the =env.example= file to =.env= and adjust the values to your environment.
+
+To start developing.
+
+#+begin_src bash
+nix develop
+#+end_src
+
+To build the HTML from the blog posts into the =public= directory.
+
+#+begin_src bash
+build
+#+end_src
+
+To sync the created HTML to the server.
+
+#+begin_src bash
+publish
+#+end_src
+
+** Tasks
+*** NEXT Include all previous posts
+
+I found some additional posts which I should include as well.
+Just for the fun of it and historic reasons.
+
+*** NEXT Better styling
+*** NEXT Tags
+
+It would be nice if I could tag my posts by topic so that readers can browse
+them easier.
+
+*** DONE [#A] Inlcude a link to home
+CLOSED: [2025-07-09 Wed 22:36]
+
+Currently when one clicks on a post you're stuck on that post.
+Therefore it would be nice to have a link on each page that takes the user back to the home page.
+
+*** DONE [#A] Setup NixOS config
+CLOSED: [2025-07-09 Wed 22:35]
+*** DONE [#A] Link to Mastodon verifcation
+CLOSED: [2025-07-09 Wed 22:35]
+*** DONE RSS feed
+CLOSED: [2025-07-09 Wed 21:47]
+*** DONE Include static files
+CLOSED: [2025-07-07 Mon 22:21]
+
+At the moment only the plain text gets exported but non of the other files like pictures, etc.
+
+They don't get included automatically by org-publish therefore I had to included rsync in the buildPhase to sync the static files to the ~$out~ directory.
+
+** Resources
+
+- https://www.gnu.org/software/emacs/manual/html_node/org/Publishing-options.html
+
+*** Inspiration
+
+- https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/
+- https://systemcrafters.net/publishing-websites-with-org-mode/automated-site-publishing/

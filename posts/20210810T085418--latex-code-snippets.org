@@ -1,0 +1,194 @@
+#+title: LaTeX code snippets
+:preamble:
+#+date: [2021-08-10 Tue 08:54]
+#+filetags:
+#+identifier: 20210810T085418
+#+author: Andreas Zweili
+#+latex_header: input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:end:
+
+This page contains various use code snippets. The preamble part shows
+what is needed at the beginning of a LaTeX document and the syntax shows
+how it is used in the text. Some of the example only require either a
+preamble or the syntax.
+
+* Support for German
+:PROPERTIES:
+:CUSTOM_ID: support-for-german
+:END:
+*preamble*
+
+#+begin_src latex
+%Support for German
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{ngerman}
+#+end_src
+
+* Support for Images
+:PROPERTIES:
+:CUSTOM_ID: support-for-images
+:END:
+Let's you insert a picture, centers it and scales it to 0.88 times the
+width of the page.
+
+*preamble*
+
+#+begin_src latex
+\usepackage{graphicx}
+#+end_src
+
+*syntax*
+
+#+begin_src latex
+\noindent\makebox[\textwidth]{\includegraphics[width=0.88\paperwidth]{picture.png}}
+#+end_src
+
+* Code with Syntax Highlighting
+:PROPERTIES:
+:CUSTOM_ID: code-with-syntax-highlighting
+:END:
+To change the Code language you'll have to edit the ​~language=bash,~ line to the corresponding language e.g. ~language=python,~.
+
+*preamble*
+
+#+begin_src latex
+\usepackage{listings}
+\usepackage{color}
+\usepackage{inconsolata}
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\lstset{
+  basicstyle=\ttfamily,
+  language=bash,
+  breaklines,
+  literate={ö}{{\"o}}1
+           {ä}{{\"a}}1
+           {ü}{{\"u}}1,
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+  showstringspaces=false,          % Removes the strange symboles where spaces are
+}
+#+end_src
+
+​*Syntax*
+
+#+begin_src latex
+\begin{lstlisting}
+Code with Syntax Highlighting
+\end{lstlisting}
+#+end_src
+
+* Code Box
+:PROPERTIES:
+:CUSTOM_ID: code-box
+:END:
+To make this easier to use with org-mode I've written a little
+BASH script which replaces the normal listings of the org-mode
+exports with the sexylisting environment I'm usually using for code
+blocks. ~replace-listings.sh~
+
+*preamble*
+
+#+begin_src latex
+% Listing with a box around it
+\usepackage[most]{tcolorbox}
+\newtcblisting{sexylisting}[2][]{
+  sharp corners,
+  fonttitle=\bfseries,
+  colframe=gray,
+  listing only,
+  listing options={basicstyle=\ttfamily,language=bash},
+  title=\thetcbcounter #2, #1
+}
+#+end_src
+
+*syntax*
+
+#+begin_src latex
+\begin{sexylisting}{Box Title}
+Code in a Box
+\end{sexylisting}{Some Code}
+#+end_src
+
+* Sans Serif Helvetica
+:PROPERTIES:
+:CUSTOM_ID: sans-serif-helvetica
+:END:
+*preamble*
+
+#+begin_src latex
+%Font settings
+\renewcommand{\familydefault}{\sfdefault}  % Enable Sans Serif
+\usepackage{helvet}  % Sets the font
+#+end_src
+
+* Source Serif Pro
+:PROPERTIES:
+:CUSTOM_ID: source-serif-pro
+:END:
+*preamble*
+
+#+begin_src latex
+\usepackage{xltxtra}
+\setmainfont{Source Serif Pro}
+#+end_src
+
+Make sure that you don't have any other font settings set and that the
+compiler is set to XeTeX.
+
+* Table Layout with more Space
+:PROPERTIES:
+:CUSTOM_ID: table-layout-with-more-space
+:END:
+Left alligned table with more space for the text inside it.
+
+*preamble*
+
+#+begin_src latex
+\renewcommand\arraystretch{1.5}%
+#+end_src
+
+*syntax*
+
+#+begin_src latex
+\begin{tabular}{ |l|l| }
+\hline
+Text in Cell A1 & Text in Cell B1\\
+\hline
+Text in Cell A2 & Text in Cell B2\\
+\hline
+\end{tabular}
+#+end_src
+
+* Colored URLs
+:PROPERTIES:
+:CUSTOM_ID: colored-urls
+:END:
+#+begin_src latex
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+}
+\urlstyle{same}
+#+end_src
+
+#+begin_src latex
+\url{http://example.com}
+#+end_src
+
+* Increase Linespacing
+:PROPERTIES:
+:CUSTOM_ID: increase-linespacing
+:END:
+#+begin_src latex
+\linespread{1.5}
+#+end_src
+
+Where 1.5 is a factor.

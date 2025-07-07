@@ -1,0 +1,123 @@
+#+title: Syncing org files to an Android device
+#+date: [2025-04-12 Sat 10:42]
+#+filetags:
+#+identifier: 20170708T104213
+#+author: Andreas Zweili
+
+* Syncing org files to an Android device
+** Note
+This is an old setup which I don't use anymore. Syncthing has gotten
+much better and works now good enough for my needs.
+
+** The Problem
+Since I've began using org-mode extensivly I thought it would be nice to
+be able to view the files on my Android device. There is a nice app
+called Orgzly which you can get from the PlayStore or the F-Droid
+repository. However Orgzly doesn't include the ability to sync the org
+files. I finally found a solution to this problem however. It's a bit of
+a hack but it's working very well, which is all that counts.
+
+** The Solution
+I've create the solution with my two favourite apps, Tasker and Termux.
+You can get both apps from the PlayStore. In addition to Termux you will
+need the app Termux:Task. It allows one to run Shell scripts from Termux
+in a Tasker task.
+
+*** Setting up Termux
+I will only cover the basic configuration needed to get the sync
+running. If you want to learn more about Termux I recommend that you go
+to the official help page.
+
+First you need to run:
+
+#+begin_example
+packages upgrade
+#+end_example
+
+This upgrades the Termux packages to the newest version. I recommend
+that you restart Termux afterwards. Since I keep my org-files in a git
+repository I'm going to install git in Termux. After the upgrade we can
+use pkg instead of packages.
+
+#+begin_example
+pgk install git
+#+end_example
+
+Afterwards we need to run:
+
+#+begin_example
+termux-setup-storage
+#+end_example
+
+This will open a prompt on your device with which you can grant Termux
+access to the internal storage. We will need this to be able to clone
+the git repository into it. Setting up the git repository is something
+which I won't cover in this guide. There are plenty of other guides on
+the web about this topic. Just make sure that you clone the repository
+somewhere in =/sdcard/=
+
+As a next step you need to create the directory to store your scripts
+which will be used by Tasker.
+
+#+begin_example
+mkdir -p ~/.termux/tasker
+#+end_example
+
+Inside that directory I created a script called =sync-notes.sh= and made
+it executable. The content of that script is:
+
+#+begin_src sh
+#!/bin/bash
+
+date +"%Y-%m-%d %H:%M" >> ~/notes.log
+git -C /sdcard/Git/notes pull >> ~/notes.log
+exit 0
+#+end_src
+
+This adds the current time and date to a log file in the Termux home
+directory and pulls in the newest commmits from my notes repository.
+Since Termux works slightly different than a normal Linux environment we
+need to execute one last command.
+
+#+begin_example
+termux-fix-shebang .termux/tasker/sync-notes.sh
+#+end_example
+
+This will correct the sheband =#!/bin/bash= to one that works with
+Termux.
+
+*** Setting up Tasker
+Setting up Tasker quite easily done. I'm going to asume that your
+familiar with Tasker and explain only the parts specific to Termux and
+Orgzly. In general I just created a Profile which executes the sync task
+every 3 hours.
+
+After you've setup the profile create a Task from the Termux Plugin. You
+can find it under Plugins->Termux:Task. The plugin allows you to specify
+the script you want to execute. Just write the first few letters of the
+script name and it will show you all the files which begin with that
+name. The following screenshots might show it a bit better what I mean.
+
+[[./2017-07-08_tasker-action.png]]
+
+[[./2017-07-08_termux-task.png]]
+
+When you finished the Termux task we'll setup a task which triggers the
+sync function of Orgzly. If we wouldn't do this we would've the up to
+date files on the device but they wouldn't show up in the Orgzly app.
+For this create code task step: Code->Run Shell The command you have to
+execute is:
+
+#+begin_example
+am startservice --user 0 -a com.orgzly.intent.action.SYNC\_START com.orgzly/com.orgzly.android.sync.SyncService
+#+end_example
+
+[[./2017-07-08_tasker-command.png]]
+
+This is everything we need to setup in Tasker and your task should look
+something like this.
+
+[[./2017-07-08_tasker-task.png]]
+
+Once you've saved it Tasker will update the git repository in the
+specified interval and refresh the Orgzly views.

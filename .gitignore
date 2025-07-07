@@ -92,3 +92,8 @@ result-*
 # Ignore automatically generated direnv output
 .direnv
 
+/.env
+/public/
+posts/index.org
+/posts/rss.xml
+/.cache/
