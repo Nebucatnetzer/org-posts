@@ -1,5 +1,5 @@
 #+title: Syncing org files to an Android device
-#+date: [2025-04-12 Sat 10:42]
+#+date: [2017-07-08]
 #+filetags:
 #+identifier: 20170708T104213
 #+author: Andreas Zweili

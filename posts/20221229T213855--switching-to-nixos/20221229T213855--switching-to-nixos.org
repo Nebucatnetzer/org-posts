@@ -1,5 +1,5 @@
 #+title: Switching to NixOS
-#+date: [2022-12-29 Thu 21:38]
+#+date: [2022-01-08 Thu 21:38]
 #+filetags:
 #+identifier: 20221229T213855
 #+author: Andreas Zweili
