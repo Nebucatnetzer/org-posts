@@ -46,10 +46,15 @@
       };
       packages.x86_64-linux.build = pkgs.writeShellApplication {
         name = "build";
-        runtimeInputs = [ finalEmacs ];
+        runtimeInputs = [
+          finalEmacs
+          pkgs.python3
+        ];
         text = ''
           rm -fr ./public
           emacs -Q --batch --script ./build-site.el
+          "$DEFAULT_BROWSER" http://localhost:8000
+          python -m http.server -d public
         '';
       };
       packages.x86_64-linux.publish = pkgs.writeShellApplication {
