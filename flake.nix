@@ -65,7 +65,7 @@
           source .env
           echo "Syncing posts to $BLOG_SERVER:$BLOG_DIRECTORY"
           ssh "$BLOG_SERVER" "mkdir -p $BLOG_DIRECTORY"
-          rsync --archive --verbose --checksum result/ "$BLOG_SERVER":"$BLOG_DIRECTORY"/
+          rsync --delete --archive --verbose --checksum result/ "$BLOG_SERVER":"$BLOG_DIRECTORY"/
         '';
       };
 
