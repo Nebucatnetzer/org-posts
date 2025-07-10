@@ -1,0 +1,305 @@
+#+TITLE: How to setup L2TP
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+A guide to show how to setup a L2TP/IPsec VPN on Ubuntu 14.04
+
+* L2TP/IPsec
+
+Credit goes to
+https://raymii.org/s/tutorials/IPSEC_L2TP_vpn_with_Ubuntu_14.04.html
+
+Make sure that these ports are open:
+
+#+BEGIN_EXAMPLE
+500, 1701, 4500
+#+END_EXAMPLE
+
+First we will install the required packages:
+
+#+BEGIN_EXAMPLE
+sudo apt-get install openswan xl2tpd ppp lsof
+#+END_EXAMPLE
+
+The openswan installation will ask some questions, this tutorial works
+with the default answers (just enter through it).
+
+* Firewall and sysctl
+
+We are going to set the firewall and make sure the kernel forwards IP
+packets:
+
+Execute this command to enable the iptables firewall to allow vpn
+traffic:
+
+#+BEGIN_EXAMPLE
+iptables -t nat -A POSTROUTING -j SNAT --to-source %SERVERIP% -o eth+
+#+END_EXAMPLE
+
+Replace %SERVERIP% with the external IP of your VPS. If your external
+interface is not named ethX (+ is a wildcard) then rename appropriately.
+
+Execute the below commands to enable kernel IP packet forwarding and
+disable ICP redirects.
+
+#+BEGIN_EXAMPLE
+echo "net.ipv4.ip_forward = 1" |  tee -a /etc/sysctl.conf
+echo "net.ipv4.conf.all.accept_redirects = 0" |  tee -a /etc/sysctl.conf
+echo "net.ipv4.conf.all.send_redirects = 0" |  tee -a /etc/sysctl.conf
+echo "net.ipv4.conf.default.rp_filter = 0" |  tee -a /etc/sysctl.conf
+echo "net.ipv4.conf.default.accept_source_route = 0" |  tee -a /etc/sysctl.conf
+echo "net.ipv4.conf.default.send_redirects = 0" |  tee -a /etc/sysctl.conf
+echo "net.ipv4.icmp_ignore_bogus_error_responses = 1" |  tee -a /etc/sysctl.conf
+#+END_EXAMPLE
+
+Set these settings for other network interfaces:
+
+#+BEGIN_EXAMPLE
+for vpn in /proc/sys/net/ipv4/conf/*; do echo 0 > $vpn/accept_redirects; echo 0 > $vpn/send_redirects; done
+#+END_EXAMPLE
+
+Apply them:
+
+#+BEGIN_EXAMPLE
+sysctl -p
+#+END_EXAMPLE
+
+* Persistent settings via /etc/rc.local
+
+To make sure this keeps working at boot you might want to add the
+following to /etc/rc.local:
+
+#+BEGIN_EXAMPLE
+for vpn in /proc/sys/net/ipv4/conf/*; do echo 0 > $vpn/accept_redirects; echo 0 > $vpn/send_redirects; done
+iptables -t nat -A POSTROUTING -j SNAT --to-source %SERVERIP% -o eth+
+#+END_EXAMPLE
+
+Add it before the exit 0 line and replace %SERVERIP% with the external
+IP of your VPS.
+
+* Configure Openswan (IPSEC)
+
+Use your favorite editor to edit the following file:
+
+/etc/ipsec.conf Replace the contents with the following:
+
+(Most lines have a comment below it explaining what it does.)
+
+#+BEGIN_EXAMPLE
+version 2 # conforms to second version of ipsec.conf specification
+
+config setup
+dumpdir=/var/run/pluto/
+#in what directory should things started by setup (notably the Pluto daemon) be allowed to dump core?
+
+nat_traversal=yes
+#whether to accept/offer to support NAT (NAPT, also known as "IP Masqurade") workaround for IPsec
+
+virtual_private=%v4:10.0.0.0/8,%v4:192.168.0.0/16,%v4:172.16.0.0/12,%v6:fd00::/8,%v6:fe80::/10
+#contains the networks that are allowed as subnet= for the remote client. In other words, the address ranges that may live behind a NAT router through which a client connects.
+
+protostack=netkey
+#decide which protocol stack is going to be used.
+
+force_keepalive=yes
+keep_alive=60
+# Send a keep-alive packet every 60 seconds.
+
+conn L2TP-PSK-noNAT
+authby=secret
+#shared secret. Use rsasig for certificates.
+
+pfs=no
+#Disable pfs
+
+auto=add
+#the ipsec tunnel should be started and routes created when the ipsec daemon itself starts.
+
+keyingtries=3
+#Only negotiate a conn. 3 times.
+
+ikelifetime=8h
+keylife=1h
+
+ike=aes256-sha1,aes128-sha1,3des-sha1
+phase2alg=aes256-sha1,aes128-sha1,3des-sha1
+# https://lists.openswan.org/pipermail/users/2014-April/022947.html
+# specifies the phase 1 encryption scheme, the hashing algorithm, and the diffie-hellman group. The modp1024 is for Diffie-Hellman 2. Why 'modp' instead of dh? DH2 is a 1028 bit encryption algorithm that modulo's a prime number, e.g. modp1028. See RFC 5114 for details or the wiki page on diffie hellmann, if interested.
+
+type=transport
+#because we use l2tp as tunnel protocol
+
+left=%SERVERIP%
+#fill in server IP above
+
+leftprotoport=17/1701
+right=%any
+rightprotoport=17/%any
+
+dpddelay=10
+# Dead Peer Dectection (RFC 3706) keepalives delay
+dpdtimeout=20
+#  length of time (in seconds) we will idle without hearing either an R_U_THERE poll from our peer, or an R_U_THERE_ACK reply.
+dpdaction=clear
+# When a DPD enabled peer is declared dead, what action should be taken. clear means the eroute and SA with both be cleared.
+#+END_EXAMPLE
+
+Replace %SERVERIP% with the external IP of your server. You can find it
+out by:
+
+#+BEGIN_EXAMPLE
+curl http://ip.mtak.nl
+#+END_EXAMPLE
+
+Do note that the config file has changed with this Ubuntu release. If
+you have upgraded Ubuntu or followed an earlier tutorial, make sure you
+change the config for ipsec.
+
+The shared secret
+
+The shared secret is defined in the /etc/ipsec.secrets file. Make sure
+it is long and random:
+
+#+BEGIN_EXAMPLE
+%SERVERIP%  %any:   PSK "69EA16F2C529E74A7D1B0FE99E69F6BDCD3E44"
+#+END_EXAMPLE
+
+Yet again, replace %SERVERIP% with the IP of your server here. If you
+want to generate a random key you can use the following openssl command:
+
+#+BEGIN_EXAMPLE
+openssl rand -hex 30
+#+END_EXAMPLE
+
+Example output:
+
+#+BEGIN_EXAMPLE
+c12cf75b47c210b9d7094ce10e3b3544c6927ff49ca2d949252b5a94ccf5
+#+END_EXAMPLE
+
+Verify IPSEC Settings
+
+Now to make sure IPSEC works, execute the following command:
+
+#+BEGIN_EXAMPLE
+ipsec verify
+#+END_EXAMPLE
+
+My output looks like this:
+
+#+BEGIN_EXAMPLE
+Checking your system to see if IPsec got installed and started correctly:
+Version check and ipsec on-path                                 [OK]
+Linux Openswan U2.6.38/K3.13.0-24-generic (netkey)
+Checking for IPsec support in kernel                            [OK]
+ SAref kernel support                                           [N/A]
+ NETKEY:  Testing XFRM related proc values                      [OK]
+[OK]
+[OK]
+Checking that pluto is running                                  [OK]
+ Pluto listening for IKE on udp 500                             [OK]
+ Pluto listening for NAT-T on udp 4500                          [OK]
+Checking for 'ip' command                                       [OK]
+Checking /bin/sh is not /bin/dash                               [WARNING]
+Checking for 'iptables' command                                 [OK]
+Opportunistic Encryption Support                                [DISABLED]
+#+END_EXAMPLE
+
+The /bin/sh and Opportunistic Encryption warnings can be ignored. The
+first one is a openswan bug and the second one causes xl2tpd to trip.
+
+Configure xl2tpd
+
+Use your favorite editor to edit the following file:
+
+#+BEGIN_EXAMPLE
+/etc/xl2tpd/xl2tpd.conf
+#+END_EXAMPLE
+
+Replace the contents with the following:
+
+#+BEGIN_EXAMPLE
+[global]
+ipsec saref = yes
+saref refinfo = 30
+
+;debug avp = yes
+;debug network = yes
+;debug state = yes
+;debug tunnel = yes
+
+[lns default]
+ip range = 172.16.1.30-172.16.1.100
+local ip = 172.16.1.1
+refuse pap = yes
+require authentication = yes
+;ppp debug = yes
+pppoptfile = /etc/ppp/options.xl2tpd
+length bit = yes
+#+END_EXAMPLE
+
+ip range = range of IPs to give to the connecting clients local ip = IP
+of VPN server refuse pap = refure pap authentication ppp debug = yes
+when testing, no when in production Local user (PAM / /etc/passwd)
+authentication Configuring PPP
+
+Use your favorite editor to edit the following file:
+
+/etc/ppp/options.xl2tpd Replace the contents with the following:
+
+#+BEGIN_EXAMPLE
+require-mschap-v2
+ms-dns 8.8.8.8
+ms-dns 8.8.4.4
+auth
+mtu 1200
+mru 1000
+crtscts
+hide-password
+modem
+name l2tpd
+proxyarp
+lcp-echo-interval 30
+lcp-echo-failure 4
+#+END_EXAMPLE
+
+ms-dns = The dns to give to the client. I use googles public DNS.
+proxyarp = Add an entry to this systems ARP [Address Resolution
+Protocol] table with the IP address of the peer and the Ethernet address
+of this system. This will have the effect of making the peer appear to
+other systems to be on the local ethernet. name l2tpd = is used in the
+ppp authentication file. Adding users
+
+Every user should be defined in the /etc/ppp/chap-secrets file. Below is
+an example file.
+
+#+BEGIN_EXAMPLE
+# Secrets for authentication using CHAP
+# client       server  secret                  IP addresses
+alice          l2tpd   0F92E5FC2414101EA            *
+bob            l2tpd   DF98F09F74C06A2F             *
+#+END_EXAMPLE
+
+client = username for the user server = the name we define in the
+ppp.options file for xl2tpd secret = password for the user IP Addresses
+= leave to * for any address or define addresses from were a user can
+login. Testing it
+
+To make sure everything has the newest config files restart openswan and
+xl2tpd:
+
+#+BEGIN_EXAMPLE
+/etc/init.d/ipsec restart
+/etc/init.d/xl2tpd restart
+#+END_EXAMPLE
+
+On the client connect to the server IP address (or add a DNS name) with
+a valid user, password and the shared secret. Test if you have internet
+access and which IP you have (via for example http://whatsmyip.org. If
+it is the VPN servers IP then it works.
+
+If you experience problems make sure to check the client log files and
+the ubuntu /var/log/syslog and /var/log/auth.log files. If you google
+the error messages you most of the time get a good answer.

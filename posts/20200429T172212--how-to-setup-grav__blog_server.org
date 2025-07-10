@@ -1,0 +1,260 @@
+#+TITLE: How to setup a blog with Grav
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+[2025-07-10]
+While restoring this post I noticed that the images where missing and I couldn't find theme anymore.
+
+This post shows how to install Grav on Ubuntu 14.04. Grav is a Fast, Simple,
+and Flexible file-based Web-platform which you can use to build your website.
+You can turn it into a blog, a portfolio or use it to display documentation.
+
+Before Grav we've been using *daux.io* for presenting notes on the web. Which
+let's you upload simple Markdown files and displays them in a nice way. However
+for Christian this isn't a good sood solution because he doesn't have access to
+SSH all the time. In addition Grav is in my opinion much more flexible and
+let's you for for example very easily remove parts, of a theme, you don't like.
+And last but not least Grav has a very nice documentation at
+http://learn.getgrav.org/.
+
+* Installation:
+
+dependencies needed:
+
+#+BEGIN_EXAMPLE
+sudo apt-get install php5 apache2 php5-curl php5-gd
+#+END_EXAMPLE
+
+I'm going to switch into the root account because it makes things a bit
+easier.
+
+#+BEGIN_EXAMPLE
+sudo -s
+cd /var/www/html
+git clone https://github.com/getgrav/grav.git
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+cd /var/www/html/grav
+bin/grav install
+#+END_EXAMPLE
+
+The *"grav [command]"* has to be executed from the grav root directory
+othewise it wont work. Same goes for the *"gpm [command]"* in the next
+part.
+
+* Installing the admin pannel
+
+Before you install the admin panel you have to execute:
+
+#+BEGIN_EXAMPLE
+bin/gpm selfupgrade -f
+#+END_EXAMPLE
+
+However this spit out an error for me. There seems to be a problem with
+the curl installation.
+
+Installing these packages fixed the problem:
+
+#+BEGIN_EXAMPLE
+apt-get install curl libcurl3 libcurl3-dev php5-curl
+#+END_EXAMPLE
+
+now it's possible to install the admin panel with:
+
+#+BEGIN_EXAMPLE
+bin/gpm install admin
+#+END_EXAMPLE
+
+if everything goes as it should you will see a message similar to this
+at the end:
+
+#+BEGIN_EXAMPLE
+Clearing cache
+
+Cleared:  cache/twig/*
+Cleared:  cache/doctrine/*
+Cleared:  cache/compiled/*
+
+Touched: /var/www/html/user/config/system.yaml
+#+END_EXAMPLE
+
+next we need to add an admin user:
+
+#+BEGIN_EXAMPLE
+bin/grav newuser
+#+END_EXAMPLE
+
+Go trough the questions and answer them as you like.
+
+* Final installation configs and folder permissions
+
+To make it fully working edit the apache config in
+/etc/apache2/apache2.conf
+
+look for the block and copy it to a new line. Then add html/ to the end
+of /var/www/ and change the line:
+
+#+BEGIN_EXAMPLE
+AllowOverride None
+#+END_EXAMPLE
+
+to:
+
+#+BEGIN_EXAMPLE
+AllowOverride All
+#+END_EXAMPLE
+
+Save the file and exit it. In addition enable the rewrite module of
+apache with:
+
+#+BEGIN_EXAMPLE
+a2enmod rewrite
+#+END_EXAMPLE
+
+Don't forget to restart the apache service:
+
+#+BEGIN_EXAMPLE
+service apache2 restart
+#+END_EXAMPLE
+
+Finally set the folder ownership to the www-data user.
+
+#+BEGIN_EXAMPLE
+chown -R www-data:www-data /var/www/html/grav
+#+END_EXAMPLE
+
+Now your grav installation should work and be reachable at
+yourdomain.url/grav The admin panel can be reached with
+yourdomain.url/grav/admin
+
+* Plugin installation
+
+Grav supports various plugins here you can find an overview:
+http://getgrav.org/downloads/plugins The installation is very easy. Open
+the admin panel and go to the menu item *Plugins*. There click on *+
+Add* and it will open a list. Each plugin comes with a description of it
+function simply click on the *Install* button and you're good to go.
+Some plugins offer options for tweaking. The ones which I tested worked
+all out of the box and didn't require any changes from my side to work.
+
+For our blog we're currently using this plugins:
+
+- Archive Plus
+- Feed
+- Pagination
+- SimpleSearch
+- Taxonomy List
+
+** Archive Plus
+
+Adds a list of all the posts sorted by publishing date to the sidebar.
+
+[[file:./_resources/archives_plus.png]]
+
+** Feed
+
+Adds an RSS and Atom feed which readers can subscribe to. In addition it
+adds to buttons to the sidebar to let the reader subscribe with a click.
+
+[[file:./_resources/feeds.png]]
+
+** Pagination
+
+Adds page buttons at the bottom of the page.
+
+[[file:./_resources/pagination.png]]
+
+** SimpleSearch
+
+Adds a little search field in the side bar.
+
+[[file:./_resources/simplesearch.png]]
+
+** Taxonomy List
+
+Adds a tag cloud to the sidebar.
+
+[[file:./_resources/taxomation.png]]
+
+* Home settings
+
+After you've installed all the necessary plugins you have to change the
+main page to the blog layout. Go to the *Pages* Menu point then select
+*Home* now select the tab *Advanced* and change the settings to the
+following:
+
+[[file:./_resources/home_advanced.png]]
+
+For our layout we don't use any content on the home page.
+
+* Posts settings
+
+To make sure that all the plugins are working correctly we have to
+change some options each time we publish a post. Therefore make sure
+that the settings of your posts are matching this screenshots:
+
+[[file:./_resources/page_options.png]]
+
+[[file:./_resources/pages_advanced.png]]
+
+* Sidebar text
+
+The text in the sidebar is hard coded however this is not really a
+problem and can be changed very easily. Login to your server and
+navigate to the grav installation root. The sidebar config is in
+*user/themes/NAMEOFYOURTHEME/templates/partials/sidebar.html.twig* Don't
+forget to open the file with sudo otherwise you want be able to save it.
+Look for this code:
+
+#+BEGIN_EXAMPLE
+<div class="sidebar-content">
+<h4>About</h4>
+<p>Lorem Ipsum etc...</p>
+#+END_EXAMPLE
+
+Now replace the Lorem Ipsum part with your text. The text will change as
+soon as you save the file.
+
+* Additional links in the navigation bar
+
+The links in the navigation are same as the sidebar text hard coded and
+just as easy to modify. Navigate to the grav installation root. In there
+open the
+*user/themes/NAMEOFYOURTHEME/templates/partials/navigation.html.twig*
+file. Don't forget that it requires root rights to save the file. Look
+for this code block:
+
+#+BEGIN_EXAMPLE
+<ul class="navigation">
+...
+</ul>
+#+END_EXAMPLE
+
+Add your custom links right before the ~</ul>~ part. like this:
+
+#+BEGIN_EXAMPLE
+<li><a href="http://yourdomain.url">Example</a></li>
+#+END_EXAMPLE
+
+and make sure it's correctly intended in the end it should look like
+this:
+
+#+BEGIN_EXAMPLE
+<ul class="navigation">
+...
+<li><a href="http://yourdomain.url">Example</a></li>
+</ul>
+#+END_EXAMPLE
+
+The links will appear as soon as you save the file.
+
+* Resources
+
+Sites used to write this tutorial:
+
+- http://learn.getgrav.org/
+- https://muut.com/getgrav#!/general#how-to-add-links-to-nav-bar
+- http://learn.getgrav.org/

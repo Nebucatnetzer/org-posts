@@ -1,0 +1,246 @@
+#+TITLE: How to setup Gitea
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+* Requirements
+
+Die folgenden Pakete werden benötigt.
+
+- mariadb-server
+- git
+
+Damit sie in Ubuntu 18.04 installiert werden können muss man zuerst noch
+die entsprechenden Repositories aktivieren. Dazu die Datei
+=/etc/apt/source.list= wie folgt editieren.
+
+*alt*
+
+#+BEGIN_EXAMPLE
+deb http://archive.ubuntu.com/ubuntu bionic main
+deb http://archive.ubuntu.com/ubuntu bionic-security main
+deb http://archive.ubuntu.com/ubuntu bionic-updates main
+#+END_EXAMPLE
+
+*neu*
+
+#+BEGIN_EXAMPLE
+deb http://archive.ubuntu.com/ubuntu bionic main universe
+deb http://archive.ubuntu.com/ubuntu bionic-security main universe
+deb http://archive.ubuntu.com/ubuntu bionic-updates main
+#+END_EXAMPLE
+
+*MariaDB Repository konfigurieren*
+
+#+BEGIN_SRC sh
+sudo apt install software-properties-common
+sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xF1656F24C74CD1D8
+sudo add-apt-repository 'deb [arch=amd64,arm64,ppc64el] http://mirror.mva-n.net/mariadb/repo/10.3/ubuntu bionic main'
+#+END_SRC
+
+Anschliessend kann man die Pakete mit folgendem Befehl installieren.
+
+#+BEGIN_SRC sh
+sudo apt update
+sudo apt install mariadb-server git
+#+END_SRC
+
+* Mariadb konfigurieren
+
+Als erstes wird die sichere Konfiguration ausgeführt. Damit kann man
+gleich ein neues Admin Passwort setzen, den Anomymen User entfernen, Die
+TestDB löschen und den Zugriff von aussen deaktivieren.
+
+#+BEGIN_SRC sh
+sudo mysql_secure_installation
+#+END_SRC
+
+Anschliessend kann man die Datenbank und den dazugehörigen User
+erstellen.
+
+#+BEGIN_SRC sh
+sudo mysql -u root -p
+#+END_SRC
+
+#+BEGIN_SRC sql
+CREATE DATABASE giteadb DEFAULT CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`;
+CREATE USER 'gitea'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON giteadb.* TO 'gitea'@'localhost';
+#+END_SRC
+
+* Gitea installieren
+
+Das Binary herunterladen und installieren:
+
+#+BEGIN_SRC sh
+wget -O gitea https://dl.gitea.io/gitea/1.5.1/gitea-1.5.1-linux-amd64
+chmod +x gitea
+sudo cp gitea /usr/bin/
+#+END_SRC
+
+*git user erstellen*
+
+#+BEGIN_SRC sh
+sudo adduser \
+   --system \
+   --shell /bin/bash \
+   --gecos 'Git Version Control' \
+   --group \
+   --disabled-password \
+   --home /home/git \
+   git
+#+END_SRC
+
+*Ordner erstellen*
+
+#+BEGIN_SRC sh
+sudo mkdir -p /var/lib/gitea/{custom,data,indexers,public,log}
+sudo chown git:git /var/lib/gitea/{data,indexers,log}
+sudo chmod 750 /var/lib/gitea/{data,indexers,log}
+sudo mkdir /etc/gitea
+sudo chown root:git /etc/gitea
+sudo chmod 770 /etc/gitea
+sudo mkdir /home/git/git-repositories
+#+END_SRC
+
+*Service File erstellen*
+
+Die Datei =/etc/systemd/system/gitea.service= erstellen und folgenden
+Inhalt einfügen.
+
+#+BEGIN_EXAMPLE
+[Unit]
+Description=Gitea (Git with a cup of tea)
+After=syslog.target
+After=network.target
+After=mysqld.service
+
+[Service]
+# Modify these two values and uncomment them if you have
+# repos with lots of files and get an HTTP error 500 because
+# of that
+###
+#LimitMEMLOCK=infinity
+#LimitNOFILE=65535
+RestartSec=2s
+Type=simple
+User=git
+Group=git
+WorkingDirectory=/var/lib/gitea/
+ExecStart=/usr/bin/gitea web -c /etc/gitea/app.ini
+Restart=always
+Environment=USER=git HOME=/home/git GITEA_WORK_DIR=/var/lib/gitea
+# If you want to bind Gitea to a port below 1024 uncomment
+# the two values below
+###
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target
+#+END_EXAMPLE
+
+*Config File erstellen*
+
+Die Datei =/etc/gitea/app.ini= mit folgendem Inhalt erstellen: Wichtig
+beim SMTP Server und der DB noch das Passwort anpassen.
+
+#+BEGIN_EXAMPLE
+APP_NAME = Contria Git Server
+RUN_USER = git
+RUN_MODE = prod
+
+[security]
+INTERNAL_TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1MzYzMDM2NTJ9.l_h1fzkwyRLSPkpQpAawymV8shzLapeEFjRZvnLzr7o
+INSTALL_LOCK   = true
+SECRET_KEY     = 0kPW5pGqYfJWSV4p0V4m2Xzm9ctaR07VsUilCWKVt5tEEIzs9ZiOKFzYs4huQOJW
+
+[database]
+DB_TYPE  = mysql
+HOST     = 127.0.0.1:3306
+NAME     = giteadb
+USER     = gitea
+PASSWD   = PASSWORD
+SSL_MODE = disable
+PATH     = data/gitea.db
+
+[repository]
+ROOT = /home/git/git-repositories
+
+[server]
+SSH_DOMAIN       = co-srv-git1
+DOMAIN           = co-srv-git1
+HTTP_PORT        = 80
+ROOT_URL         = http://co-srv-git1/
+DISABLE_SSH      = false
+SSH_PORT         = 22
+LFS_START_SERVER = false
+OFFLINE_MODE     = false
+
+[mailer]
+ENABLED = true
+HOST    = smtp.gmail.com:587
+FROM    = log@contria.com
+USER    = log@contria.com
+PASSWD  = PASSWORD
+
+[service]
+REGISTER_EMAIL_CONFIRM            = false
+ENABLE_NOTIFY_MAIL                = true
+DISABLE_REGISTRATION              = true
+ALLOW_ONLY_EXTERNAL_REGISTRATION  = false
+ENABLE_CAPTCHA                    = false
+REQUIRE_SIGNIN_VIEW               = true
+DEFAULT_KEEP_EMAIL_PRIVATE        = false
+DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+DEFAULT_ENABLE_TIMETRACKING       = true
+NO_REPLY_ADDRESS                  = noreply.example.org
+
+[picture]
+DISABLE_GRAVATAR        = false
+ENABLE_FEDERATED_AVATAR = true
+
+[openid]
+ENABLE_OPENID_SIGNIN = true
+ENABLE_OPENID_SIGNUP = false
+
+[session]
+PROVIDER = file
+
+[log]
+MODE      = file
+LEVEL     = Info
+ROOT_PATH = /var/lib/gitea/log
+#+END_EXAMPLE
+
+*Admin User erstellen*
+
+Wenn man das Config File bereits erstellt hat promptet einen Gitea nicht
+mehr für das Setup. Darum muss man den Admin User von Hand erstellen.
+
+#+BEGIN_SRC sh
+sudo su git
+gitea admin create-user --name Administrator --password asecurepassword --email me@example.com --admin --config /etc/gitea/app.ini
+exit
+#+END_SRC
+
+*Service aktivieren und starten*
+
+Die folgenden zwei Befehle ausführen.
+
+#+BEGIN_SRC sh
+sudo systemctl enable gitea.service
+sudo systemctl start gitea.service
+#+END_SRC
+
+Gitea sollte nun im Webbrowser erreichbar sein.
+
+* Resources
+
+- [[https://docs.gitea.io/en-us/install-from-binary/]]
+- [[https://docs.gitea.io/en-us/linux-service/]]
+- [[https://docs.gitea.io/en-us/command-line/]]
+- [[https://github.com/go-gitea/gitea/blob/master/contrib/systemd/gitea.service]]
+- [[https://wiki.archlinux.org/index.php/Gitea]]
+- [[https://www.atlassian.com/git/tutorials/migrating-convert]]

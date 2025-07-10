@@ -1,0 +1,116 @@
+#+TITLE: How to install virtualizor
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+date: [2016-10-22]
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+* Hardening
+
+SSH Port ändern, Zuerst das System updaten und die Policy Core Utily
+installiern und anschliessend neu starten.
+
+#+BEGIN_SRC sh
+sudo yum update
+sudo yum install policycoreutils-python
+reboot
+#+END_SRC
+
+Anschliessend den neuen SSH Port öffnen und den alten schliessen
+
+#+BEGIN_SRC sh
+sudo semanage port -a -t ssh_port_t -p tcp 2323
+sudo semanage port -d -t ssh_port_t -p tcp 22
+#+END_SRC
+
+Nun kann die SSH Konfig angepasst werden. Folgende werde müssen
+geändert werden.
+
+* Vorher
+
+#+BEGIN_SRC sh
+#Port 22
+#Protocol 2
+#PermitRootLogin yes
+#StrictModes yes
+#+END_SRC
+
+* Nachher
+
+#+BEGIN_SRC sh
+Port 2323
+Protocol 2
+PermitRootLogin no
+StrictModes yes
+AllowUsers fsit
+#+END_SRC
+
+Anschliessend muss man den Dienst neu starten
+
+#+BEGIN_SRC sh
+sudo systemctl reload sshd
+#+END_SRC
+
+Falls man es nicht schon beim Installieren gemacht hat kann man mit
+nmtui den hostnamen ändern und neustarten.
+
+#+BEGIN_SRC sh
+nmtui
+reboot
+#+END_SRC
+
+* Virtualizor installieren
+
+Zusätzliche Partition für LVM erstellen
+
+#+BEGIN_SRC sh
+fdisk /dev/sda
+                n
+                p
+                3
+                t
+                8e
+                w
+#+END_SRC
+
+Partionslayout laden
+
+#+BEGIN_SRC sh
+partx -a /dev/sda
+#+END_SRC
+
+LVM installieren
+
+#+BEGIN_SRC sh
+yum install lvm2
+#+END_SRC
+
+Physical Volume erstellen und anzeigen lassen
+
+#+BEGIN_SRC sh
+pvcreate /dev/sda3
+pvdisplay
+#+END_SRC
+
+Volume Group storage erstellen
+
+#+BEGIN_SRC sh
+vgcreate storage /dev/sda3
+#+END_SRC
+
+Logic Volume Thin Pool thin_storage in der Volume Group storage erstellen
+
+#+BEGIN_SRC sh
+lvcreate -L 1.68TiB --thinpool thin_storage storage
+#+END_SRC
+
+wget installieren, Virtualizor install script herunterladen und ausführen.
+
+#+BEGIN_SRC sh
+yum install wget
+wget -N http://files.virtualizor.com/install.sh
+chmod +x install.sh
+./install.sh email=samuel.schwander@ch.gudel.com kernel=kvm
+#+END_SRC
+
+Storage hinzufügen

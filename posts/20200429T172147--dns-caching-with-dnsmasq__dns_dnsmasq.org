@@ -1,0 +1,98 @@
+#+title: DNS caching with DNSmasq
+#+date: [2020-04-29 Wed 17:21]
+#+filetags: :dns:dnsmasq:
+#+identifier: 20200429T172147
+#+author: Andreas Zweili
+#+LaTeX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+
+* DNS Caching
+
+This tutorial shows how to setup DNS caching on the Raspberry Pi
+With Arch Linux ARM and dnsmasq.
+This quide is based on my default Raspberry Pi setup.
+You might want to checkout that guide first to get everything
+working.
+
+DNS caching can speed up browsing a bit, for me however it doesn't make
+a huge difference but it's a fun little project for a spare Raspberry Pi.
+
+* Install DNSmasq
+
+Install DNSmasq with the following command:
+
+#+BEGIN_SRC sh
+sudo pacman -S dnsmasq
+#+END_SRC
+
+* Configure dnsmasq
+
+Remove the /etc/dnsmasq.conf and create a new one with
+following content:
+
+#+BEGIN_SRC conf
+# Dnsmasq.conf for raspberry pi
+# /etc/dnsmasq.conf
+# http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq.conf.example
+
+# Set up your local domain here
+domain=raspberry.local
+resolv-file=/etc/resolv.dnsmasq
+min-port=4096
+server=8.8.8.8
+server=8.8.4.4
+
+# Max cache size dnsmasq can give us, and we want all of it!
+cache-size=10000
+
+# Below are settings for dhcp. Comment them out if you dont want
+# dnsmasq to serve up dhcpd requests.
+# dhcp-range=192.168.0.100,192.168.0.149,255.255.255.0,1440m
+# dhcp-option=3,192.168.0.1
+# dhcp-authoritative
+#+END_SRC
+
+* Enable and start the dnsmasq service
+
+Enable the dnsmasq service with the following commands:
+
+#+BEGIN_SRC sh
+sudo systemctl enable dnsmasq
+sudo systemctl start dnsmasq
+#+END_SRC
+
+The DNS caching is now setup up and ready to use.
+You can now point your computers or even easier your router
+to the Raspberry Pi.
+
+* Testing (optional)
+
+If you want to test if it's working you can use the tool "dig".
+It's part of the bind-tools package.
+
+Install it with:
+
+#+BEGIN_SRC sh
+sudo pacman -S bind-tools
+#+END_SRC
+
+Then you can execute this command:
+
+#+BEGIN_SRC sh
+dig archlinux.org | grep "Query time"
+#+END_SRC
+
+Instead of archlinux.org you can use any url you want.
+With this tool you can check the query time for your current
+DNS server.
+
+Without DNS caching I have query times usually ranging from 150ms to 8ms.
+While values of over 100ms are usually for sites which get visited
+the first time.
+With a Raspberry Pi as a DNS cache I get values ranging from 50ms to
+1ms while values around 50ms are the first look up.
+
+* Resources
+
+Websites used to create this tutorial:
+- http://www.heystephenwood.com/2013/06/use-your-raspberry-pi-as-dns-cache-to.html
+- https://wiki.archlinux.org/index.php/Dnsmasq

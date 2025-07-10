@@ -1,0 +1,79 @@
+#+TITLE: How to configure Apache with a self signed certificate
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+This guide shows how to configure SSL with Apache and a self signed
+certificate.
+
+* Enable apache2 ssl
+
+Enable ssl with the following command:
+
+#+BEGIN_SRC sh
+sudo a2ensite default-ssl
+sudo a2enmod ssl
+sudo service apache2 restart
+#+END_SRC
+
+* Generate an SSL certificate
+
+We will generate our certificate with openssl for better control:
+
+#+BEGIN_SRC sh
+sudo openssl req -x509 -nodes -days 365 \ -newkey rsa:2048 -keyout /etc/ssl/private/hostname.key \ -out /etc/ssl/hostname.crt
+#+END_SRC
+
+* Create an owncloud apache config
+
+The easiest way to do this is by copying the default-ssl config in
+/etc/apache2/sites-available/ . It's probably a good idea to name it something
+like owncloud_ssl. If you haven't done so point the config to the self created
+certificat. Now activate the config and disable the old one.
+
+#+BEGIN_SRC sh
+sudo a2dissite default-ssl
+sudo a2ensite owncloud-ssl
+sudo service reload apache2
+#+END_SRC
+
+* Force https
+
+Enforce https on all connections by adding this to
+/etc/apache2/sites-available/000-default.conf:
+
+#+BEGIN_EXAMPLE
+<VirtualHost *:80>
+    RewriteEngine on
+    ReWriteCond %{SERVER_PORT} !^443$
+    RewriteRule ^/(.*) https://%{HTTP_HOST}/$1 [NC,R,L]
+</VirtualHost>
+
+<VirtualHost *:443>
+    ServerAdmin admin@website.com
+    DocumentRoot /var/www/html
+    SSLEngine On
+    SSLCipherSuite EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+    SSLHonorCipherOrder on
+    SSLProtocol all -SSLv2 -SSLv3 -TLSV1
+    SSLCertificateFile      /etc/ssl/certs/certificat.crt
+    SSLCertificateKeyFile /etc/ssl/private/private.key
+    SSLCACertificateFile    /etc/ssl/certs/Intermediate_CA_Bundle.crt
+</Virtualhost>
+#+END_EXAMPLE
+
+* Tipp
+
+If you're running owncloud add this inside the big block inside
+/etc/apache2/sites-available/owncloud.conf
+
+#+BEGIN_EXAMPLE
+SSLRandomSeed startup file:/dev/urandom 1024
+SSLRandomSeed connect file:/dev/urandom 1024
+#+END_EXAMPLE
+
+In case you want to see if the ssl connection is working correctly and
+your configurations are secured you can use this website:
+
+- https://www.ssllabs.com/ssltest/index.html

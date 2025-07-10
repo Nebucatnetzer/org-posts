@@ -13,9 +13,6 @@ how it is used in the text. Some of the example only require either a
 preamble or the syntax.
 
 * Support for German
-:PROPERTIES:
-:CUSTOM_ID: support-for-german
-:END:
 *preamble*
 
 #+begin_src latex
@@ -26,9 +23,6 @@ preamble or the syntax.
 #+end_src
 
 * Support for Images
-:PROPERTIES:
-:CUSTOM_ID: support-for-images
-:END:
 Let's you insert a picture, centers it and scales it to 0.88 times the
 width of the page.
 
@@ -45,9 +39,6 @@ width of the page.
 #+end_src
 
 * Code with Syntax Highlighting
-:PROPERTIES:
-:CUSTOM_ID: code-with-syntax-highlighting
-:END:
 To change the Code language you'll have to edit the ​~language=bash,~ line to the corresponding language e.g. ~language=python,~.
 
 *preamble*
@@ -84,9 +75,6 @@ Code with Syntax Highlighting
 #+end_src
 
 * Code Box
-:PROPERTIES:
-:CUSTOM_ID: code-box
-:END:
 To make this easier to use with org-mode I've written a little
 BASH script which replaces the normal listings of the org-mode
 exports with the sexylisting environment I'm usually using for code
@@ -116,9 +104,6 @@ Code in a Box
 #+end_src
 
 * Sans Serif Helvetica
-:PROPERTIES:
-:CUSTOM_ID: sans-serif-helvetica
-:END:
 *preamble*
 
 #+begin_src latex
@@ -128,9 +113,6 @@ Code in a Box
 #+end_src
 
 * Source Serif Pro
-:PROPERTIES:
-:CUSTOM_ID: source-serif-pro
-:END:
 *preamble*
 
 #+begin_src latex
@@ -142,9 +124,6 @@ Make sure that you don't have any other font settings set and that the
 compiler is set to XeTeX.
 
 * Table Layout with more Space
-:PROPERTIES:
-:CUSTOM_ID: table-layout-with-more-space
-:END:
 Left alligned table with more space for the text inside it.
 
 *preamble*
@@ -166,9 +145,6 @@ Text in Cell A2 & Text in Cell B2\\
 #+end_src
 
 * Colored URLs
-:PROPERTIES:
-:CUSTOM_ID: colored-urls
-:END:
 #+begin_src latex
 \usepackage{hyperref}
 \hypersetup{
@@ -184,9 +160,6 @@ Text in Cell A2 & Text in Cell B2\\
 #+end_src
 
 * Increase Linespacing
-:PROPERTIES:
-:CUSTOM_ID: increase-linespacing
-:END:
 #+begin_src latex
 \linespread{1.5}
 #+end_src

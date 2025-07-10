@@ -1,0 +1,352 @@
+#+TITLE: How to setup OpenVPN
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+This guide shows how to setup an OpenVPN server. The guide is written in
+German because it was a homework assignment. I hope someone will find
+use for it anyway. This guide was written for Debian Jessie.
+
+Als erstes müssen die OpenVPN Repositories hinzugefügt werden da die
+Version in den Debian Repositories veraltet ist und nicht alle
+Sicherheitsfeatures unterstützt die ich nutzen möchte. Hierfür muss
+zuerst der GPG key importiert werden.
+
+#+BEGIN_EXAMPLE
+wget -O - https://swupdate.openvpn.net/repos/repo-public.gpg|
+apt-key add -
+#+END_EXAMPLE
+
+Als nächstest generieren wir ein Source List File welches den Pfad zum
+OpenVPN Repository enthält.
+
+#+BEGIN_EXAMPLE
+echo "deb http://swupdate.openvpn.net/apt trusty main" >
+/etc/apt/sources.list.d/swupdate.openvpn.net.list
+#+END_EXAMPLE
+
+Nun können die nötigen Packete installiert werden. Wichtig zuerst die
+Source Liste updaten damit die aktuellste Versionen herunterladen
+werden.
+
+#+BEGIN_EXAMPLE
+sudo apt update
+sudo apt install openvpn easy-rsa
+#+END_EXAMPLE
+
+Anschliessend wechsle ich zum root User da alle nachfolgenden Befehle
+als root ausgeführt werden müssen.
+
+#+BEGIN_EXAMPLE
+sudo -s
+#+END_EXAMPLE
+
+Nun kopiere ich die easy-rsa Scripts und wechsle auch gleich in den
+Ordner /etc/openvpn/easy-rsa
+
+#+BEGIN_EXAMPLE
+cp /usr/share/easy-rsa/* /etc/openvpn/easy-rsa/
+cd /etc/openvpn/easy-rsa/
+#+END_EXAMPLE
+
+Mit vim editiere ich nun die Datei vars. In dieser Datei werden
+Standardvariabeln gespeichert welche bei der Key und Zertifikat
+Generierung verwendet werden.
+
+#+BEGIN_EXAMPLE
+vim vars
+#+END_EXAMPLE
+
+Ich habe meine ungefähr so eingetragen wobei ich die Daten auf meinen
+Wohnort angepasst habe.
+
+#+BEGIN_EXAMPLE
+export KEY_SIZE=4096
+export CA_EXPIRE=365
+export KEY_EXPIRE=365
+export KEY_COUNTRY="US"
+export KEY_PROVINCE="TX"
+export KEY_CITY="Dallas"
+export KEY_ORG="My Company Name"
+export KEY_EMAIL="sammy@example.com"
+export KEY_OU="MYOrganizationalUnit"
+#+END_EXAMPLE
+
+Die Variabeln werden nun mit source geladen.
+
+#+BEGIN_EXAMPLE
+source vars
+#+END_EXAMPLE
+
+Nun wird das Verzeichnis mit dem clean-all Script bereinigt.
+
+#+BEGIN_EXAMPLE
+./clean-all
+#+END_EXAMPLE
+
+Anschliessend kann das CA Zertifikat gebildet werden. Dabei werden zwei
+Dateien generiert ca.key und ca.crt. ca.key muss sicher aufbewahrt
+werden.
+
+#+BEGIN_EXAMPLE
+./build-ca
+#+END_EXAMPLE
+
+Als nächster Schritt wird der Server Key gebildet. Hierfür führt man das
+Script build-key- server zusammen mit dem gwünschten Dateinamen aus. Es
+ist wichtig das dieser Key sicher aufbewahrt wird.
+
+#+BEGIN_EXAMPLE
+./build-key-server server
+#+END_EXAMPLE
+
+Nun können die Keys und die Zertifikate für die Clients gebildet werden.
+Gleich wie beim Server Key hängt man noch einen Namen an. Hier empfiehlt
+es sich einen Namen zu nehmen den man mit dem jeweiligen Client in
+Verbindung bringen kann. Es ist möglich einen Key für mehrere Clients zu
+verwenden. Ich generiere mir jedoch für jeden Client ein eigenes da es
+sicherer ist und einfacher ist falls mal ein Gerät verloren geht. Auch
+hier gilt wieder das die *.key Dateien sicher aufbewahrt werden müssen.
+
+#+BEGIN_EXAMPLE
+./build-key client
+#+END_EXAMPLE
+
+Ich verschiebe dann die Dateien ca.crt, ca.key und testserver.crt in den
+openvpn Ordner und wechsle zurück in den openvpn Ordner da wir die
+easy-rsa Scripte nicht mehr benötigen.
+
+#+BEGIN_EXAMPLE
+mv keys/ca.crt /etc/openvpn/
+mv keys/ca.key /etc/openvpn/
+mv keys/server.crt /etc/openvpn/
+cd ..
+#+END_EXAMPLE
+
+Im Anschluss generiere ich den Difie-Hellman Parameter. Dieser muss wie
+der Server Key oder der ca.key vor unbefugtem Zugriff geschützt werden.
+Ich habe hier einen Wert von 4096 gewählt. Dies mag ein Bisschen
+paranoid erscheinen aber ich arbeite nach dem Prinzip "Better safe than
+sorry" und seit de Snowden Leaks liest man immer mehr darüber das
+angeblich sichere Werte geknackt wurden oder das verschlüsselte Dateien
+aufbewahrt werden bis man sie knacken kann.
+
+#+BEGIN_EXAMPLE
+openssl dhparam -out dh4096.pem 4096
+#+END_EXAMPLE
+
+Zusätzlich generiere ich noch einen TLS Autentifizierungs Key. Dieser
+verhindert DDOS Attacken auf den VPN Server.
+
+#+BEGIN_EXAMPLE
+openvpn --genkey --secret ta.key
+#+END_EXAMPLE
+
+Die Client Zertifikate und Keys kopiere ich in den Home Ordner.
+Zusätzlich ändere ich noch die Berechtigungen auf meine normalen User
+damit ich die Dateien dann mit Filezilla oder einem ähnlich Tool vom
+Server kopieren kann.
+
+#+BEGIN_EXAMPLE
+mkdir /home/nebucatnetzer/openvpn
+cp keys/* /home/nebucatnetzer/openvpn
+chown -R nebucatnetzer:nebucatnetzer/home/nebucatnetzer/keys/
+#+END_EXAMPLE
+
+Nun kopiere und extrahiere ich die Beispiel Konfigurationsdatei für
+einen Server.
+
+#+BEGIN_EXAMPLE
+cp /usr/share/doc/openvpn/examples/sample-config-files/server.conf.gz /etc/openvpn/
+gunzip server.conf.gz
+#+END_EXAMPLE
+
+Anschliessend mache ich davon zwei Kopien mit eindeutigen Namen.
+
+#+BEGIN_EXAMPLE
+cp server.conf server_tcp.conf
+cp server.conf server_udp.conf
+#+END_EXAMPLE
+
+Und lösche die das Beispiel Config File.
+
+#+BEGIN_EXAMPLE
+rm server.conf
+#+END_EXAMPLE
+
+Die zwei richtigen Config Files passe ich nun an. Die genaue Config
+beschreibe ich in der nächsten Sektion.
+
+#+BEGIN_EXAMPLE
+vim server_tcp.conf
+vim server_udp.conf
+#+END_EXAMPLE
+
+Damit der Traffic vom Server aus weitergeleitet wird, sprich man
+effektiv durch das VPN surfen kann muss man das Traffic Forwarding
+aktivieren.
+
+#+BEGIN_EXAMPLE
+echo "1" > /proc/sys/net/ipv4/ip_forward
+#+END_EXAMPLE
+
+Damit die Einstellung nach einem Neustart auch bestehen bleibt muss man
+die Datei /etc/sysctl.conf öffnen und diese Linie unkommentieren:
+
+#+BEGIN_EXAMPLE
+#net.ipv4.ip_forward=1
+#+END_EXAMPLE
+
+zu
+
+#+BEGIN_EXAMPLE
+net.ipv4.ip_forward=1
+#+END_EXAMPLE
+
+Zusätzlich muss man die Route definieren damit der Server weiss welchen
+Traffic er wohin routen muss. Einfach den Befehl im Terminal ausführen.
+Allerdings bleiben auch diese nach einem Reboot nicht bestehen.
+
+#+BEGIN_EXAMPLE
+iptables -t nat -A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o eth0 -j MASQUERADE
+#+END_EXAMPLE
+
+Auch muss man die Ports in der Firewall öffnen und die Firewall
+konfigurieren. Ich nutze UFW was für "Uncomplicated Firewall" steht. Was
+eigentlich nur ein Tool ist welches es einem vereinfacht iptables (eine
+Anwendung um die Linux Kernel Firewall zu konfigurieren) Regeln zu
+erstellen.
+
+#+BEGIN_EXAMPLE
+ufw allow 1194
+ufw allow 443
+#+END_EXAMPLE
+
+In der Datei /etc/default/ufw ändern wir die Zeilen:
+
+#+BEGIN_EXAMPLE
+DEFAULT_OUTPUT_POLICY="DROP"
+DEFAULT_FORWARD_POLICY="DROP"
+#+END_EXAMPLE
+
+zu
+
+#+BEGIN_EXAMPLE
+DEFAULT_OUTPUT_POLICY="ACCEPT"
+DEFAULT_FORWARD_POLICY="ACCEPT"
+#+END_EXAMPLE
+
+Dies erlaubt ausgehenden und weitergeleiteten Traffic durch die
+Firewall. Damit die Routen die wir weiter oben definiert haben auch nach
+einem Neustart erhalten bleiben müssen auch diese noch in einer Config
+gespeichert werden. Und zwar in /etc/ufw/before.rules gleich nach Ende
+der Einleitungskommentare fügen wir diese Zeilen hinzu.
+
+#+BEGIN_EXAMPLE
+# START OPENVPN RULES
+# NAT table rules
+*nat
+:POSTROUTING ACCEPT [0:0]
+# Allow traffic from OpenVPN client to eth0
+-A POSTROUTING -s 10.8.0.0/24 -o eth0 -j MASQUERADE
+COMMIT
+# END OPENVPN RULES
+
+# START OPENVPN RULES
+# NAT table rules
+*nat
+:POSTROUTING ACCEPT [0:0]
+# Allow traffic from OpenVPN client to eth0
+-A POSTROUTING -s 10.9.0.0/24 -o eth0 -j MASQUERADE
+COMMIT
+# END OPENVPN RULES
+#+END_EXAMPLE
+
+Zum Abschluss der Firewall Konfiguration wird die Firewall neu
+gestartet. ufw reload Nun aktivieren wir den OpenVPN Service und starten
+diesen dann auch gerade. Aktvieren müssen wir ihn damit nach einem
+Neustart des System der OpenVPN Server automatisch wieder gestartet
+wird. service openvpn enable service openvpn start Nun sollte das VPN
+einsatzbereit und erreichbar sein. Die Installation wäre somit
+abgeschlossen.
+
+Hier beschreibe ich den Inhalt von /etc/openvpn/server_udp.conf.
+Server_tcp.conf hat den gleichen Inhalt bis auf port, proto und server
+X.X.X.X Welche dann bei server_tcp wie folgt wären:
+
+#+BEGIN_EXAMPLE
+port 443
+proto tcp
+server 10.9.0.0 255.255.255.0
+#+END_EXAMPLE
+
+Jeder Kommentar erhält ein Rautezeichen am Anfang der Zeile. Dies stellt
+sicher das beim Kopieren der Server nicht versucht den Kommentar zu
+interpretieren. server_udp.conf
+
+#+BEGIN_EXAMPLE
+# Definiert auf welchem Port OpenVPN läuft
+port 1194
+# Definiert mit welchem Protokol OpenVPN läuft
+proto udp
+# Definiert ob das Netzwerk gebridget oder geroutet wird. Sprich ob das Gerät direkt mit
+# den Geräten im VPN kommuniziert (DHCP etc.) oder ob der VPN Server dies
+# übernimmt.
+dev tun
+# Zeigt dem OpenVPN Server wo er die ca.crt, server.crt, server.key und dh4096.pem
+# Dateien findet.
+ca ca.crt
+cert server.crt
+key server.key
+dh dh4096.pem
+# Gibt vor welche interne Route der Server hat.
+server 10.8.0.0 255.255.255.0
+# Definiert das OpenVPN allen Traffic ans Internet weiterreicht.
+push "redirect-gateway def1 bypass-dhcp"
+
+# Gibt den DNS Server vor. Ich habe hier einen unzensierten angegeben um allfällige
+# Blockaden zu umgehen.
+push "dhcp-option DNS 84.200.68.80"
+push "dhcp-option DNS 84.200.70.40"
+# Wie lange die Verbindung offen gehalten werden soll bei einem Unterbruch.
+Keepalive 10 120
+# Zeigt dem Server wo der ta.key liegt und in welche Richtung die Authentifizierung läuft.
+# Der Client braucht hier 1 wenn der Server auf 0 steht.
+tls-auth ta.key 0
+# Gibt den Verschlüsselungsalorithmus vor. Ich habe hier einen stärkeren gewählt als
+# standardmässig eingestellt ist.
+cipher AES-256-CBC
+# Mit welchem Hashingalgorithmus die Pakete überprüft werden. Ich habe hier auch einen
+# stärkeren genommen als der Default da der Default seit längerem als unsicher gilt.
+auth SHA512
+# Gibt vor welche TLS Version mindesten gebraucht werden muss. In diesem Falls
+# mindesten 1.2 or die höchste verfügbare Version.
+tls-version-min 1.2 or-highest
+# Verifiziert diie Zertifikate gegen Man in the middle Attacken
+remote-cert-tls client
+# Gibt an das der OpenVPN Server ohne Rechte läuft. Funktioniert nur unter Linux/Unix
+user nobody
+group nogroup
+# Benötigte default Option
+persist-key
+persist-tun
+
+# Die letzten drei Parameter geben an das keine Logs jeglicher Art aufgezeichnet werden.
+# Ich brauche nicht zu wissen wer sich wann verbindet sobald das System funktioniert.
+verb 0
+log /dev/null
+status /dev/null
+#+END_EXAMPLE
+
+*Resources*
+
+- https://www.digitalocean.com/community/tutorials/how-to-set-up-an-openvpn-server-on-ubuntu-14-04
+- https://openvpn.net/index.php/open-source/documentation/howto.html
+- http://parabing.com/2014/06/openvpn-on-ubuntu/
+- https://help.ubuntu.com/14.04/serverguide/openvpn.html
+- http://blogging.dragon.org.uk/openvpn-server-on-ubuntu-14-04-2/
+- https://gist.github.com/schickling/225550662982cad94e77
+- https://oli.new-lan.de/2015/02/openvpn-crypto-tuning-tls-auth-tls-cipher-tls-version-min-dh-verify-x509-name-cipher-auth-remote-cert-tls/
+- https://blog.g3rt.nl/openvpn-security-tips.html

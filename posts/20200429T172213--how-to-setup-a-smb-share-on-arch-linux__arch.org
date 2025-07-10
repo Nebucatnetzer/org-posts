@@ -1,0 +1,224 @@
+#+TITLE: How to setup a Samba share in Arch Linux
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+This tutorial shows how to setup a network share on the Raspberry Pi with Arch
+Linux ARM and Samba. In addition it shows how to automatically mount an
+external harddrive to a specific location.
+
+This quide is based on my default Raspberry Pi setup. You might want to
+checkout that guide first to get everything working.
+
+* Installing the samba server
+
+Install the required package with the following command:
+
+#+BEGIN_EXAMPLE
+sudo pacman -S samba
+#+END_EXAMPLE
+
+* Create a configuration file
+
+Samba comes with a default configuration file however you have to copy
+it to the correct location:
+
+#+BEGIN_EXAMPLE
+sudo cp /etc/samba/smb.conf.default /etc/samba/smb.conf
+#+END_EXAMPLE
+
+* Mount the external drive
+
+Since we want to safe the files on a external drive we have to mount it
+first. To do this we first need to find out the name of the drive. With
+the command:
+
+#+BEGIN_EXAMPLE
+lsblk
+#+END_EXAMPLE
+
+you can list all connected storage devices and it's partitions. On my
+setup the output looks like this:
+
+#+BEGIN_EXAMPLE
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda           8:0    0  3.7T  0 disk
+`-sda1        8:1    0  3.7T  0 part
+mmcblk0     179:0    0 29.2G  0 disk
+|-mmcblk0p1 179:1    0  100M  0 part /boot
+`-mmcblk0p2 179:2    0 29.1G  0 part /
+#+END_EXAMPLE
+
+mmcblk0 is the sdcard which holds the operating system of the Raspberry
+Pi. As you can see it's partitions are mounted to / and /boot. The drive
+we are interested in is called sda and holds one partition named sda1.
+
+Now we create a folder where we want to mount the drive to:
+
+#+BEGIN_EXAMPLE
+sudo mkdir /mnt/sda1
+#+END_EXAMPLE
+
+I call mine sda1 like the partition I'm going to mount to it. To be able
+to write to it with the normal user we need to change the ownership
+with:
+
+#+BEGIN_EXAMPLE
+sudo chown -R username /mnt/sda1
+#+END_EXAMPLE
+
+Now mount the drive to that folder with:
+
+#+BEGIN_EXAMPLE
+sudo mount /dev/sda1 /mnt/sda1
+#+END_EXAMPLE
+
+If you execute now lsblk again it should look like this:
+
+#+BEGIN_EXAMPLE
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda           8:0    0  3.7T  0 disk
+`-sda1        8:1    0  3.7T  0 part /mnt/sda1
+mmcblk0     179:0    0 29.2G  0 disk
+|-mmcblk0p1 179:1    0  100M  0 part /boot
+`-mmcblk0p2 179:2    0 29.1G  0 part /
+#+END_EXAMPLE
+
+To be able to write to it from the client you'll have to change the
+permissions. There might be another way to do this but I haven't found
+out yet how.
+
+#+BEGIN_EXAMPLE
+chmod -R 777 /mnt/sda1
+#+END_EXAMPLE
+
+* Mount the drive automatically at boot
+
+This change however will only stay until the next reboot. To
+automatically mount the drive you have to add it to the fstab file. It's
+located in /etc/fstab. You can edit it with your favourite text editor.
+By default mine looks like this:
+
+#+BEGIN_EXAMPLE
+#
+# /etc/fstab: static file system information
+#
+# <file system> <dir>   <type>  <options>   <dump>  <pass>
+/dev/mmcblk0p1  /boot   vfat    defaults        0       0
+#+END_EXAMPLE
+
+Edit it so that it looks like this:
+
+#+BEGIN_EXAMPLE
+#
+# /etc/fstab: static file system information
+#
+# <file system> <dir>   <type>  <options>   <dump>  <pass>
+/dev/mmcblk0p1  /boot   vfat    defaults        0       0
+/dev/sda1  /mnt/sda1   auto    noatime      0   0
+#+END_EXAMPLE
+
+Now the system mounts sda1 at each boot to /mnt/sda1.
+
+* Make a user to a samba user
+
+To be able to use samba we need a user which has access to it. For this
+we need to make a linux user to a samba user. We can do this with the
+following command:
+
+#+BEGIN_EXAMPLE
+sudo pdbedit -a -u samba_user
+#+END_EXAMPLE
+
+I personally use for samba_user my normal user on the raspberry pi.
+
+* Configure Samba
+
+To be able to share a folder we have to add it to the
+/etc/samba/smb.conf file Open the file with a text editor and navigate
+to the "Share definitions" sections.
+
+For each parent folder you want to share you have to add one definition.
+Here's an example definition:
+
+#+BEGIN_EXAMPLE
+[documents]
+path = /mnt/sda1/documents
+available = yes
+valid users = samba_user
+read only = no
+browseable = yes
+browseable = yes
+public = yes
+writeable = yes
+#+END_EXAMPLE
+
+After you've added all the shares you want and saved the file continue
+with the last step.
+
+* Enable and start the server
+
+For the final step we have to enable and start the samba server. To
+enable it execute:
+
+#+BEGIN_EXAMPLE
+sudo systemctl enable smbd.service
+sudo systemctl enable nmbd.service
+#+END_EXAMPLE
+
+and to start it:
+
+#+BEGIN_EXAMPLE
+sudo systemctl start smbd
+sudo systemctl start nmbd
+#+END_EXAMPLE
+
+The server is now up and running and ready to use.
+
+* Tipps
+
+** Server Side
+
+I symlink the folders I want to share to my home folder. This makes it
+easier to navigate to them. In addition I started with two drives,
+symlinks made it possible to make it look more consistend. Also in the
+smb.conf file I pointed the shares to /home/username/documents instead
+of /mnt/sda1/documents.
+
+** Client side
+
+I recommend to use a graphical file manager to connect to the shares.
+It's IMO the quickest method. For this method you need to install the
+gvfs-smb package with
+
+#+BEGIN_EXAMPLE
+sudo pacman -S gvfs-smb
+#+END_EXAMPLE
+
+If you want to mount the shares on the command line I recommend the
+cifs-utils package:
+
+#+BEGIN_EXAMPLE
+sudo pacman -S cifs-utils
+#+END_EXAMPLE
+
+Once you created the desired mount location e.g. /mnt/documents You can
+mount the share with the following command:
+
+#+BEGIN_EXAMPLE
+sudo mount -t cifs //servername/documents /mnt/documents/ -o user=samba_user,password=samba_password,ip=server.ip
+#+END_EXAMPLE
+
+If you want to have it mounted at boot you can add an entry like this to
+your clients fstab file:
+
+#+BEGIN_EXAMPLE
+//servername/documents /mnt/documents cifs username=samba_user,password=samba_password,x-systemd.automount 0 0
+#+END_EXAMPLE
+
+* Resources
+
+Websites used to create this tutorial:
+
+- https://wiki.archlinux.org/index.php/Samba

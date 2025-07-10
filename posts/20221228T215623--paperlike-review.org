@@ -7,21 +7,16 @@
 #+latex_header: input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
 :end:
 
-* Paperlike Review
-
-I recently upgraded to un iPad Air 2020 from a iPad 2018. As with the
-iPad I wanted to use the Paperlike screen protector again. So right at
-the beginning I applied the screen protector. However I wasn't as
-satisfied with it like I was with the one I got for the 2018 iPad. The
-image was okay but it scratched very easily and after just a few weeks
-it started to look like a mess. In addition I felt that it got dirty
-very quickly as well. So I often had to clean the front with water and
-soap. Just rubbing it clean with a cloth (preferably a micro fiber one)
-wasn't working with the Paperlike. So this week I decided to remove the
-Paperlike and just try to go with the naked screen itself. The reason
-why I got the Paperlike for the 2018 iPad was to improve the writing
-feeling. After removing the screen protector from the iPad Air and
-testing it a bit I must say that the Paper like didn't really help that
-much with improving the writing feeling.
+I recently upgraded to un iPad Air 2020 from a iPad 2018.
+As with the iPad I wanted to use the Paperlike screen protector again.
+So right at the beginning I applied the screen protector.
+However I wasn't as satisfied with it like I was with the one I got for the 2018 iPad.
+The image was okay but it scratched very easily and after just a few weeks it started to look like a mess.
+In addition I felt that it got dirty very quickly as well.
+So I often had to clean the front with water and soap.
+Just rubbing it clean with a cloth (preferably a micro fiber one) wasn't working with the Paperlike.
+So this week I decided to remove the Paperlike and just try to go with the naked screen itself.
+The reason why I got the Paperlike for the 2018 iPad was to improve the writing feeling.
+After removing the screen protector from the iPad Air and testing it a bit I must say that the Paper like didn't really help that much with improving the writing feeling.
 
 All in all the Paperlike for the iPad Air was a waste of money.

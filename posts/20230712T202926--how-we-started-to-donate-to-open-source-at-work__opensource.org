@@ -1,0 +1,123 @@
+#+title: How we started to donate to Open Source at work
+:preamble:
+#+date: [2023-07-12 Thu 20:29]
+#+filetags: :opensource:
+#+identifier: 20230712T202926
+#+author: Andreas Zweili
+#+latex_header: input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:end:
+
+* Pitching the idea
+
+As you might have seen in the news, there have been a lot of articles
+over the years that Open Source software doesn't receive enough support,
+especially financially.
+
+At my employer [[https://www.contria.ch][Contria GmbH]] we use a lot of
+Open Source software or freely available tools:
+
+- Ubuntu as the base OS for our VMs
+- Ansible to deploy the VMs
+- Nginx, PHP and MariaDB to run the applications
+- Vagrant and Virtualbox to set up a development environment
+- digwebinterface.com
+
+Just to name a few.
+
+I would consider myself a Free Software enthusiast and read a lot of
+those articles mentioned in the first paragraph. So a few years ago I
+decided, I would try and ask if Contria would be willing to donate to
+the various Open Source projects we use to build and run our products.
+
+When I spoke with the manager of the company about it, I wasn't actually
+met with a lot of resistance. I mentioned the funding problems a lot of
+Open Source projects had and asked if we as Contria might be wiling to
+support them in this regard. He quickly saw the reasoning behind the
+idea and was willing to continue with the project.
+
+#+begin_quote
+*Just like that?*\\
+/Yes just like that. Personally I expected more resistance and hope that
+it will be this easy for everyone who tries to do something similar./
+#+end_quote
+
+* Getting started
+
+After the initial pitch it took a few years, due to our workload, before
+we actually started with the project. But in 2021 I was able to
+officially dedicate some of my time to the project.
+
+I started to create a short list with software and projects we used and
+seemed worth to donate to. I focused mainly on non-profit organisations
+and individuals. For example, while we use Ubuntu it makes more sense to
+me to donate to Debian. Ubuntu is based on Debian, and Canonical (the
+company behind Ubuntu) is already profitable.
+
+In addition to the larger and more system related projects, I would like
+to start curating a list of essential packages and libraries we use in
+our products. So far we only donated to about two or three, but I expect
+this to be something to grow each year anyway.
+
+After I created the list I assigned a percentage of a potential budget
+to each project. Currently, these are just 5 and 10% per project. The
+percentages are roughly weighed by importance to our work and to a
+lesser extent by the size of the project. This way the distribution
+wasn't based on the actual budget because when I created the list I
+didn't know yet how much money was available for donations. It then
+turned out that the budget would be a *few thousand* Swiss Francs, I
+could freely allocate.
+
+#+begin_quote
+*That doesn't sound like much for a Swiss company with over 20
+employees.*\\
+/Compared to the licenses we pay for proprietary software it's indeed
+not that much. But then again, it's still a substantial amount and I'm
+quite happy with it. Who knows maybe it will grow in the future./
+#+end_quote
+
+Last year we had about 40% left which weren't allocated to a specific
+project. However, we didn't just want to keep the money and were sure
+that there were very important but "hidden" projects we didn't think of.
+Think OpenSSL for example which was one of the most prominent examples
+in recent years.\\
+We first thought about giving the money to the Free Software Foundation
+Europe (FSFE) or a similar foundation. A lot of them do great work, but
+we felt that some of them are too political for a company to donate to.
+We then found the [[https://www.oscollective.org/][Open Source
+Collective]] which was exactly what we were looking for. Projects can
+apply for funding at the Open Source Collective, and they distribute the
+donations between the projects. So any leftover budget we have goes
+fully to the Open Source Collective now.
+
+* Problems when donating
+
+For most projects it was very easy to donate to. Especially when they
+are on [[https://opencollective.com][opencollective.com]]. Donating
+through PayPal works as well, but we prefer Open Collective.
+
+Some projects use regular bank accounts for donations, while this worked
+well for most projects, it was more labour intensive on our part as the
+donations had to be processed by the financial department. In the case
+of the Drupal foundation however, we weren't able to donate at all
+because something was wrong with the address of their bank. Luckily they
+are now on Open Collective.
+
+One project we quite like and use a lot didn't collect its donation, and
+it looks like the project might have become unmaintained. I'm not sure
+yet of we donate to it again this year. I really appreciate their work
+but if the money doesn't get used we rather give it to a project which
+does use it.
+
+* Final thoughts
+
+I'm very happy with the outcome of our donating project. I feel that the
+amount we donate is sustainable, and it shows that we as a company care
+about these projects.\\
+Since it's my employer I'm writing here about I can't make any
+predictions, but I will keep advocating for the use and support of Open
+Source and especially Free Software inside our company.
+
+For other people who think their employer might be able to contribute to
+Open Source projects, I give the following advice:\\
+The main reason why we didn't do it before, was that we didn't have
+someone who carried the idea forward. So go ahead and give it a try :).

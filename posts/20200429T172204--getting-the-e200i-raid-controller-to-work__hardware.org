@@ -1,0 +1,116 @@
+#+TITLE: Getting the RAID controller e200i to work
+:PREAMPLE:
+#+AUTHOR: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+First we need to add the HP repositories This are the Debian Jessie
+repositories from HP which contain the utilities to manage the raid
+controller e200i. Paste this into /etc/apt/sourcelist
+
+#+BEGIN_SRC sh
+deb http://downloads.linux.hpe.com/SDR/repo/mcp jessie/current non-free
+#+END_SRC
+
+Then do a
+
+#+BEGIN_SRC sh
+sudo apt update
+#+END_SRC
+
+And install the necessary packages. On my LM110 G5 only this two worked:
+
+#+BEGIN_SRC sh
+sudo apt install hpssacli hpssaducli
+#+END_SRC
+
+- hpssacli\\
+  HP Command Line Smart Storage Administration Utility
+- hpssaducli\\
+  HP Command Line Smart Storage Administration Diagnostics
+
+After we installed the packages we can now get some health data from our
+raid controller and the disks.
+
+First run:
+
+#+BEGIN_SRC sh
+sudo hpssacli
+#+END_SRC
+
+To enter the RAID Administration Utility. With the following command we
+can detailed information of all the attached RAID controllers:
+
+#+BEGIN_SRC sh
+ctrl all show config
+#+END_SRC
+
+Which outputs on my machine:
+
+#+BEGIN_SRC sh
+Smart Array E200 in Slot 3                (sn: PA6C90P9SWJ0CE)
+    array A (SATA, Unused Space: 0  MB)
+        logicaldrive 1 (1.4 TB, RAID 5, OK)
+        physicaldrive 1I:0:1 (port 1I:box 0:bay 1, SATA, 500 GB, OK)
+        physicaldrive 1I:0:2 (port 1I:box 0:bay 2, SATA, 500 GB, OK)
+        physicaldrive 1I:0:3 (port 1I:box 0:bay 3, SATA, 500 GB, OK)
+        physicaldrive 1I:0:4 (port 1I:box 0:bay 4, SATA, 500 GB, OK)
+#+END_SRC
+
+With:
+
+#+BEGIN_SRC sh
+ctrl show all detail
+#+END_SRC
+
+We get the following output
+
+#+BEGIN_SRC sh
+Smart Array E200 in Slot 3
+    Bus Interface: PCI
+    Slot: 3
+    Serial Number: PA6C90P9SWJ0CE
+    Cache Serial Number: P9A3A0B9SWJ5XF
+    RAID 6 (ADG) Status: Disabled
+    Controller Status: OK
+    Hardware Revision: A
+    Firmware Version: 1.84
+    Rebuild Priority: Medium
+    Expand Priority: Medium
+    Surface Scan Delay: 15 secs
+    Surface Scan Mode: Idle
+    Parallel Surface Scan Supported: No
+    Post Prompt Timeout: 0 secs
+    Cache Board Present: True
+    Cache Status: OK
+    Cache Ratio: 100% Read / 0% Write
+    Drive Write Cache: Enabled
+    Total Cache Size: 128 MB
+    Total Cache Memory Available: 96 MB
+    No-Battery Write Cache: Disabled
+    Cache Backup Power Source: Batteries
+    Battery/Capacitor Count: 1
+    Battery/Capacitor Status: OK
+    SATA NCQ Supported: False
+    Number of Ports: 2 Internal only
+    Driver Name: cciss
+    Driver Version: 3.6.26
+    Driver Supports HP SSD Smart Path: False
+    PCI Address (Domain:Bus:Device.Function): 0000:0A:08.0
+#+END_SRC
+
+To improve disk performance I will enable the disk write cache and set
+the cache ratio to 100/0
+
+#+BEGIN_SRC sh
+=> ctrl slot=0 modify cacheratio=100/0
+=> ctrl slot=0 modify dwc=enable
+#+END_SRC
+
+Now we have everything configured for the RAID on our server.
+
+* Resources
+
+- http://downloads.linux.hpe.com/SDR/project/mcp/
+- https://kallesplayground.wordpress.com/useful-stuff/hp-smart-array-cli-commands-under-esxi/
+- https://goldmann.pl/blog/2012/05/13/hp-smart-array-e200i-performance/

@@ -1,0 +1,96 @@
+#+title: Dot files with GNU Stow
+:PREAMPLE:
+#+date: [2020-04-29 Wed 17:21]
+#+filetags:
+#+identifier: 20200429T172149
+#+author: Andreas Zweili
+#+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:END:
+
+GNU/Stow is a handy little utily designed to symlink programms built from
+source to their correct place which makes it easier to keep track of them.
+
+However it's also a very handy tool if you want to backup your config files
+with a version control system like git, because it allows you to store all your
+config files in one folder. In addition you can collect the configuration files
+from all of your machines in that folder because you can just symlink the ones
+you need and forget about the rest.
+
+* Creating the stow directory
+
+To use stow you simply need to move your dot files to a central folder. E.g.
+dot_files. In the that folder you have to create a folder for each
+configuration you want to store E.g.:
+
+- VLC
+- Vim
+- Bash
+
+In each folder you have to replicate the folder structure of your home
+directory. For VLC this would mean the following path -> VLC/.config/vlc For
+Bash -> Bash/ The config files have to be in the "same" folder like they
+normally would.
+
+A more visual comparison:
+
+Structure of the Home folder
+
+#+BEGIN_SRC
+home/
+    andreas/
+        .config/
+        .vim/
+            [...some files]
+        .bashrc
+        .bash_profile
+        .bash_logout
+        .vimrc
+#+END_SRC
+
+Structure of the stow diretory
+
+#+BEGIN_SRC
+dot_files/
+    bash/
+        .bashrc
+        .bash_profile
+        .bash_logout
+    vim/
+        .vim/
+            [...some files]
+        .vimrc
+#+END_SRC
+
+* Backing up the files
+
+The easiest way to back up the config files is with a git repository. This has
+the advantage of being able to see the changes and the comments why a certain
+config file is the way it is.
+
+* Restoring the config files
+
+To link the files you can execute:
+
+#+BEGIN_SRC
+stow application_name
+#+END_SRC
+
+This will link the structure to the parent folder. However since we want to
+restore them to the home folder we have to specify the target folder.
+
+In my case the command then looks like this:
+
+#+BEGIN_SRC
+stow -t /home/andreas/ application_name
+#+END_SRC
+
+To make it easier to restore multiple applications I put everything into a
+shell script. In addition it allows me to easily specify different
+configurations for different machines.
+
+* Resources
+
+Websites used to create this tutorial:
+- https://www.gnu.org/software/stow/manual/stow.html#Multiple-Stow-Directories
+- http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html
+- https://github.com/xero/dotfiles

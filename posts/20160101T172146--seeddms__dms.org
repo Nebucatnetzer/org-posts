@@ -1,0 +1,110 @@
+#+title: SeedDMS
+#+date: [2016-01-01]
+#+filetags: :dms:
+#+identifier: 20160101T172146
+#+author: Andreas Zweili
+
+This is a tutorial on how to install SeedDMS 4.3 on Debian Jessie
+with an external MySQL server.
+
+First we have to install all the depencies:
+
+#+BEGIN_SRC sh
+sudo apt-get install apache2 php5 php5-mysql php5-gd php-pear imagemagick poppler-utils catdoc
+#+END_SRC
+
+Second we have to install the required pear packages:
+
+#+BEGIN_SRC sh
+sudo pear install Log
+sudo pear channel-discover pear.dotkernel.com/zf1/svn
+sudo pear install zend/zend
+#+END_SRC
+
+To have it fully working we need to enable the rewrite module for Apache:
+#+BEGIN_SRC sh
+sudo a2enmod rewrite
+#+END_SRC
+
+In addition we need change the apache config.
+There should be a part in the /etc/apache2/apache2.conf which looks like this:
+
+#+BEGIN_SRC xml
+<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride None
+        Require all granted
+</Directory>
+#+END_SRC
+
+We need to change it to this:
+
+#+BEGIN_SRC xml
+<Directory /var/www/>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+</Directory>
+#+END_SRC
+
+Now we can download the SeedDMS files from here:
+https://sourceforge.net/projects/seeddms/files/
+
+For this installation I went with seeddms-quickstart-4.3.28.tar.gz.
+I've downloaded it to /var/www/ and extracted the archive.
+Inside the now generated folder there are 4 folders however one of them is only a symlink:
+
+- data
+- pear
+- seeddms-4.3.28
+- www (symlink to seeddms-4.3.28)
+
+For my installation I've moved the data folder to /var/ so that it isn't directly reachable by the webserver.
+Then I moved the seeddms-4.3.28 folder to /var/www/ and renamed it to html
+
+#+BEGIN_SRC sh
+sudo mv /var/www/seeddms43x/seeddms-4.3.28 /var/www/html
+#+END_SRC
+
+Now I moved the pear folder into the html folder and copied the
+SeedDMS folder inside the pear folder into the html folder. This is
+required because it was complaining that it couldn't find the path
+otherwise.
+
+#+BEGIN_SRC sh
+sudo mv /var/www/seeddms43x/pear/ /var/www/html/
+#+END_SRC
+
+#+BEGIN_SRC sh
+sudo cp /var/www/html/pear/SeedDMS /var/www/html/
+#+END_SRC
+
+Don't forget to give all the folders read/write permissions for the
+user www-data.
+
+As a last step we have to change the configuration file
+(~/var/www/html/conf/settings.xml~) to reflect our changes. It would be
+a bit much to cover all the changes necessary. Just make sure that all
+the paths we've changed are correct. The config file itself is very
+well commented so it shouldn't be a big problem to find all the places
+requiring a correction. I'll paste however the lines how they look on
+my system:
+
+#+BEGIN_SRC xml
+ <server rootDir="/var/www/html/" httpRoot="/" contentDir="/var/data/"
+ stagingDir="/var/data/staging/" luceneDir="/var/data/lucene/"
+ logFileEnable="true" logFileRotation="d" enableLargeFileUpload="false"
+ partitionSize="2000000" cacheDir="/var/data/cache/" dropFolderDir="">
+</server>
+#+END_SRC
+
+#+BEGIN_SRC xml
+<database dbDriver="mysql" dbHostname="mariadb.2li.local" dbDatabase="seeddmsdb" dbUser="seeddms" dbPass="Password" doNotCheckVersion="false">
+</database>
+#+END_SRC
+
+Now restart the apache service and you should be able to access the installation on http://dms-ip/
+
+* Resources
+
+- https://myanwyn.blogspot.ch/2014/12/how-to-install-seeddms-on-ubuntu.html
