@@ -208,26 +208,26 @@ way.
 
 [fn:2] https://github.com/novski/EMB
 
-[fn:3] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nextcloud/default.nix#L78
+[fn:3] https://github.com/Nebucatnetzer/nixos/blob/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nextcloud/default.nix#L78
 
-[fn:4] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/Restic-server-mysql-client/default.nix
+[fn:4] https://github.com/Nebucatnetzer/nixos/blob/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/Restic-server-mysql-client/default.nix
 
-[fn:5] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nginx-proxy/default.nix#L12
+[fn:5] https://github.com/Nebucatnetzer/nixos/blob/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nginx-proxy/default.nix#L12
 
-[fn:6] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nginx-fpm/default.nix
+[fn:6] https://github.com/Nebucatnetzer/nixos/blob/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nginx-fpm/default.nix
 
-[fn:7] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/log-to-ram/default.nix
+[fn:7] https://github.com/Nebucatnetzer/nixos/blob/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/log-to-ram/default.nix
 
-[fn:8] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/syslog/default.nix
+[fn:8] https://github.com/Nebucatnetzer/nixos/blob/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/syslog/default.nix
 
 [fn:9] https://lnav.org/
 
-[fn:10] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nextcloud/default.nix#L46
+[fn:10] https://github.com/Nebucatnetzer/nixos/blob/ebe8adcea559fa7c0c23336ac20bb50854f5fc25/modules/nextcloud/default.nix#L46
 
-[fn:11] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/5f90eb6068a1da2a460aedc175255e64e3c037a4/modules/common/default.nix#L14-L29
+[fn:11] https://github.com/Nebucatnetzer/nixos/blob/5f90eb6068a1da2a460aedc175255e64e3c037a4/modules/common/default.nix#L14-L29
 
-[fn:12] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/5f90eb6068a1da2a460aedc175255e64e3c037a4/scripts/remote_switch.sh
+[fn:12] https://github.com/Nebucatnetzer/nixos/blob/5f90eb6068a1da2a460aedc175255e64e3c037a4/scripts/remote_switch.sh
 
 [fn:13] https://github.com/Nebucatnetzer/tt-rss-aarch64/blob/main/.github/workflows/build-image.yml
 
-[fn:14] https://git.2li.ch/Nebucatnetzer/nixos/src/commit/5f90eb6068a1da2a460aedc175255e64e3c037a4/flake.nix#L34
+[fn:14] https://github.com/Nebucatnetzer/nixos/blob/5f90eb6068a1da2a460aedc175255e64e3c037a4/flake.nix#L34
