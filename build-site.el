@@ -7,7 +7,8 @@
       org-html-validation-link nil
       org-html-head-include-scripts nil
       org-html-head-include-default-style nil
-      org-html-head "<link rel=\"stylesheet\" href=\"https://cdn.simplecss.org/simple.min.css\" /> <link rel=\"alternate\" type=\"application/rss+xml\" title=\"Notes from Andreas Zweili\" href=\"https://2li.ch/rss.xml\" />"
+      org-html-head "<link rel=\"stylesheet\" href=\"/static/styles.css\" />
+                     <link rel=\"alternate\" type=\"application/rss+xml\" title=\"Notes from Andreas Zweili\" href=\"https://2li.ch/rss.xml\" />"
       org-publish-timestamp-directory "./.cache/"
       )
 
