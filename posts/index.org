@@ -1,5 +1,12 @@
 #+TITLE: Notes from Andreas Zweili
 
+I'm a Linux enthusiast from Switzerland.
+Currently I'm interested in NixOS, Emacs, Python and Metal music.
+In my job I work a lot with Ansible and and some Nix.
+At home I’m hosting various services on RaspberryPi's running NixOS.
+
+This is a static site build with Emacs and Nix you can find the source on [[https://github.com/Nebucatnetzer/org-posts][GitHub]].
+
 #+begin_export html
 <p>
   If you want to contact or follow me you can find me on
