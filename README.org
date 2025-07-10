@@ -27,16 +27,28 @@ publish
 #+end_src
 
 ** Tasks
-*** NEXT Include all previous posts
-
-I found some additional posts which I should include as well.
-Just for the fun of it and historic reasons.
-
 *** NEXT Better styling
+
+- [ ] Especially the footer needs to be smaller
+
 *** NEXT Tags
 
 It would be nice if I could tag my posts by topic so that readers can browse
 them easier.
+
+*** NEXT Correct sort order
+
+For some reason the posts don't show up in order.
+
+*** DONE Maybe include the sitemap
+CLOSED: [2025-07-10 Thu 21:05]
+*** DONE Limit contact page to main page
+CLOSED: [2025-07-10 Thu 21:05]
+*** DONE Include all previous posts
+CLOSED: [2025-07-10 Thu 21:04]
+
+I found some additional posts which I should include as well.
+Just for the fun of it and historic reasons.
 
 *** DONE [#A] Inlcude a link to home
 CLOSED: [2025-07-09 Wed 22:36]
@@ -65,3 +77,5 @@ They don't get included automatically by org-publish therefore I had to included
 
 - https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/
 - https://systemcrafters.net/publishing-websites-with-org-mode/automated-site-publishing/
+- https://taingram.org/blog/org-mode-blog.html
+- https://git.sr.ht/~taingram/org-publish-rss/
