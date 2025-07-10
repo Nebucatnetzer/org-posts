@@ -26,27 +26,12 @@
          :html-link-home "https://www.2li.ch"
          :html-link-up "/"
          :html-postamble "<footer>
-         <p xmlns:cc=\"http://creativecommons.org/ns#\"
-         xmlns:dct=\"http://purl.org/dc/terms/\"><a property=\"dct:title\"
-         rel=\"cc:attributionURL nofollow noopener noreferrer\"
-         href=\"https://www.2li.ch\" target=\"_blank\" class=\"external-link
-         no-image\">Notes</a> by <a rel=\"cc:attributionURL dct:creator nofollow
-         noopener noreferrer\" property=\"cc:attributionName\"
-         href=\"https://social.linux.pizza/@nebucatnetzer\" target=\"_blank\"
-         class=\"external-link no-image\">Andreas Zweili</a> is licensed under <a
-         href=\"http://creativecommons.org/licenses/by-sa/4.0/?ref=chooser-v1\"
-         target=\"_blank\" rel=\"license noopener noreferrer nofollow\"
-         style=\"display:inline-block;\" class=\"external-link images\">CC BY-SA
-         4.0<img
-         style=\"height:22px!important;margin-left:3px;vertical-align:text-bottom;\"
-         src=\"https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1\"
-         /><img
-         style=\"height:22px!important;margin-left:3px;vertical-align:text-bottom;\"
-         src=\"https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1\"
-         /><img
-         style=\"height:22px!important;margin-left:3px;vertical-align:text-bottom;\"
-         src=\"https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1\"
-         /></a></p>
+         <div>
+         <a href=\"https://www.2li.ch\">Notes</a> © 2025 by <a
+            href=\"https://social.linux.pizza/@nebucatnetzer\">Andreas Zweili</a> is licensed under <a
+            href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0
+         </a>
+         </div>
 
          <div class=\"generated\">
          Created with %c on <a href=\"https://www.gnu.org\">GNU</a>/<a href=\"https://www.kernel.org/\">Linux</a>
