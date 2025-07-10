@@ -1,0 +1,17 @@
+#+TITLE: Notes from Andreas Zweili
+
+#+begin_blog-entries
+#+INCLUDE: "sitemap.org" :lines "3-"
+#+end_blog-entries
+
+#+begin_export html
+<p>
+  If you want to contact or follow me you can find me on
+  <a rel="me nofollow noopener noreferrer"
+     href="https://social.linux.pizza/@nebucatnetzer"
+     target="_blank"
+     class="external-link no-image">
+     Mastodon
+  </a>.
+</p>
+#+end_export

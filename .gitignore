@@ -94,6 +94,6 @@ result-*
 
 /.env
 /public/
-posts/index.org
 /posts/rss.xml
 /.cache/
+/posts/sitemap.org

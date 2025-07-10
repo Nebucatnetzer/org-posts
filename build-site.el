@@ -26,10 +26,6 @@
          :html-link-home "https://www.2li.ch"
          :html-link-up "/"
          :html-postamble "<footer>
-         <p>If you want to contact or follow me you can find me on <a rel=\"me
-         nofollow noopener noreferrer\"
-         href=\"https://social.linux.pizza/@nebucatnetzer\" target=\"_blank\"
-         class=\"external-link no-image\">Mastodon</a>.</p>
          <p xmlns:cc=\"http://creativecommons.org/ns#\"
          xmlns:dct=\"http://purl.org/dc/terms/\"><a property=\"dct:title\"
          rel=\"cc:attributionURL nofollow noopener noreferrer\"
@@ -58,8 +54,8 @@
          </footer>"
 
          :auto-sitemap t
-         :sitemap-title "Notes from Andreas Zweili"
-         :sitemap-filename "index.org"
+         :sitemap-title "Sitemap for Andreas Zweili's notes"
+         :sitemap-filename "sitemap.org"
          :sitemap-style list
          :sitemap-sort-folders ignore
 
