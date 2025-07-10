@@ -1,9 +1,5 @@
 #+TITLE: Notes from Andreas Zweili
 
-#+begin_blog-entries
-#+INCLUDE: "sitemap.org" :lines "3-"
-#+end_blog-entries
-
 #+begin_export html
 <p>
   If you want to contact or follow me you can find me on
@@ -15,3 +11,7 @@
   </a>.
 </p>
 #+end_export
+
+#+begin_blog-entries
+#+INCLUDE: "sitemap.org" :lines "3-"
+#+end_blog-entries
