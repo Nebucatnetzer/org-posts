@@ -1,11 +1,14 @@
 #+TITLE: Notes from Andreas Zweili
+#+OPTIONS: toc:nil
+
+* About Me
 
 I'm a Linux enthusiast from Switzerland.
-Currently I'm interested in NixOS, Emacs, Python and Metal music.
-In my job I work a lot with Ansible and and some Nix.
-At home I’m hosting various services on RaspberryPi's running NixOS.
+Currently, I'm interested in NixOS, Emacs, Python and Metal music.
+In my job I work a lot with Ansible and some Nix.
+At home, I'm hosting various services on RaspberryPi's running NixOS.
 
-This is a static site build with Emacs and Nix you can find the source on [[https://github.com/Nebucatnetzer/org-posts][GitHub]].
+*Contact*
 
 #+begin_export html
 <p>
@@ -18,6 +21,16 @@ This is a static site build with Emacs and Nix you can find the source on [[http
   </a>.
 </p>
 #+end_export
+
+* About this site
+
+This is a static site built with Emacs and Nix you can find the source on [[https://github.com/Nebucatnetzer/org-posts][GitHub]].
+You can find my othe projects there as well, they are just mirrors however.
+Due to very agressiv LLM crawlers I had to close public access to my private git forge and decided to let Microsoft pay the bill for that traffic.
+
+If you find a dead link pointing to *git.2li.ch* you might be able to find an up-to-date version on [[https://github.com/Nebucatnetzer?tab=repositories][GitHub]].
+
+* Posts
 
 #+begin_blog-entries
 #+INCLUDE: "sitemap.org" :lines "3-"
