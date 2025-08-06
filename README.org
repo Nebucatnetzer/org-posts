@@ -32,11 +32,14 @@ publish
 - [X] Especially the footer needs to be smaller
 - [ ] Change colors
 - [ ] The into paragraph could be nicer
+- [ ] Remove CDN
 
 *** NEXT Tags :feature:
 
 It would be nice if I could tag my posts by topic so that readers can browse
 them easier.
+
+*** NEXT Spellcheck all posts
 
 *** DONE Remove index.org from sitemap :bug:
 CLOSED: [2025-08-07 Thu 00:21]
