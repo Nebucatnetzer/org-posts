@@ -17,6 +17,7 @@
         `(("posts"
            :recursive t
            :author "Andreas Zweili"
+           :auto-sitemap nil
            :base-directory "./posts"
            :publishing-function org-html-publish-to-html
            :publishing-directory "./public"
@@ -40,18 +41,26 @@
          </div>
          </footer>"
 
-           :auto-sitemap t
-           :sitemap-title "Sitemap for Andreas Zweili's notes"
-           :sitemap-filename "sitemap.org"
-           :sitemap-style list
-           :sitemap-sort-folders ignore
-
            :auto-rss t
            :rss-title "Andreas Zweili's Blog"
            :rss-description "Blog posts on Free Software, technology, etc."
            :rss-with-content all
            :completion-function org-publish-rss
            )
+
+          ("sitemap"
+           :auto-sitemap t
+           :base-directory "./posts"
+           :exclude "index.org"
+           :publishing-directory "./public"
+           :publishing-function org-html-publish-to-html
+           :recursive t
+           :sitemap-filename "sitemap.org"
+           :sitemap-sort-files anti-chronologically
+           :sitemap-style list
+           :sitemap-title "Sitemap for Andreas Zweili's notes"
+           )
+
           ("static"
            :base-directory "./posts/"
            :base-extension "css\\|txt\\|jpg\\|gif\\|png"
@@ -59,7 +68,7 @@
            :include ("rss.xml")
            :publishing-directory  "./public/"
            :publishing-function org-publish-attachment)
-          ("blog" :components ("posts" "static"))
+          ("blog" :components ("sitemap" "posts" "static"))
           )
         )
 
