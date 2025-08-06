@@ -27,22 +27,26 @@ publish
 #+end_src
 
 ** Tasks
-*** NEXT Correct sort order :bug:
-
-For some reason the posts don't show up in order.
-
-*** NEXT Remove index.org from sitemap :bug:
-
-Currently index.org gets included which is a bit stupid as it means that I list the page itself as a blog post.
-
 *** NEXT Better styling :enhancement:
 
-- [ ] Especially the footer needs to be smaller
+- [X] Especially the footer needs to be smaller
+- [ ] Change colors
+- [ ] The into paragraph could be nicer
 
 *** NEXT Tags :feature:
 
 It would be nice if I could tag my posts by topic so that readers can browse
 them easier.
+
+*** DONE Remove index.org from sitemap :bug:
+CLOSED: [2025-08-07 Thu 00:21]
+
+Currently index.org gets included which is a bit stupid as it means that I list the page itself as a blog post.
+
+*** DONE Correct sort order :bug:
+CLOSED: [2025-08-07 Thu 00:21]
+
+For some reason the posts don't show up in order.
 
 *** DONE Disable heading numbers in rss.xml :bug:
 CLOSED: [2025-08-06 Wed 17:41]
