@@ -27,18 +27,29 @@ publish
 #+end_src
 
 ** Tasks
-*** NEXT Better styling
+*** NEXT Correct sort order :bug:
+
+For some reason the posts don't show up in order.
+
+*** NEXT Remove index.org from sitemap :bug:
+
+Currently index.org gets included which is a bit stupid as it means that I list the page itself as a blog post.
+
+*** NEXT Better styling :enhancement:
 
 - [ ] Especially the footer needs to be smaller
 
-*** NEXT Tags
+*** NEXT Tags :feature:
 
 It would be nice if I could tag my posts by topic so that readers can browse
 them easier.
 
-*** NEXT Correct sort order
+*** DONE Disable heading numbers in rss.xml :bug:
+CLOSED: [2025-08-06 Wed 17:41]
 
-For some reason the posts don't show up in order.
+Can be done by configuring the normal org export.
+
+https://mastodon.social/@tiang/114825462665180768
 
 *** DONE Maybe include the sitemap
 CLOSED: [2025-07-10 Thu 21:05]
