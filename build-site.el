@@ -10,6 +10,7 @@
         org-html-head "<link rel=\"stylesheet\" href=\"/static/styles.css\" />
                      <link rel=\"alternate\" type=\"application/rss+xml\" title=\"Notes from Andreas Zweili\" href=\"https://2li.ch/rss.xml\" />"
         org-publish-timestamp-directory "./.cache/"
+        org-export-with-section-numbers nil
         )
 
 (setopt org-publish-project-alist
