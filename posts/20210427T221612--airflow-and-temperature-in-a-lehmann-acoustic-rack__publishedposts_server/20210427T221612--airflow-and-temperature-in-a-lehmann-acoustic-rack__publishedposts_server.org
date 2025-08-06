@@ -37,7 +37,7 @@ The top ones were kind of obvious and even a bit unnecessary since they blow out
 Since the environment temperatures peak currently at around 20 degrees Celsius I decided to the filters completely.
 When summer arrives with temperatures around 30 degrees it's not acceptable to add an additional 6 degrees due to bad airflow.
 
-#+caption: 2021-04-27_rack_temperature.png
+#+caption: Graph showing the reduction in heat build-up
 [[file:2021-04-27_rack_temperature.png]]
 
 So in the end I bought expensive dust filters which weren't useful but I learned how important airflow for temperature can be in a server cabinet.
