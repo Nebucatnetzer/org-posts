@@ -2,6 +2,7 @@
 :PREAMPLE:
 #+AUTHOR: Andreas Zweili
 #+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+#+date: [2020-04-29]
 :END:
 
 * Requirements
