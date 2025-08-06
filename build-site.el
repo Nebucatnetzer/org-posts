@@ -59,6 +59,13 @@
            :sitemap-sort-files anti-chronologically
            :sitemap-style list
            :sitemap-title "Sitemap for Andreas Zweili's notes"
+           :sitemap-format-entry
+           (lambda (entry style project)
+             (format "[[file:%s][%s %s]]"
+                     (url-hexify-string entry)
+                     (format-time-string "%Y-%m-%d"
+                                         (org-publish-find-date entry project))
+                     (org-publish-find-title entry project)))
            )
 
           ("static"
