@@ -33,7 +33,8 @@ publish
 It would be nice if I could tag my posts by topic so that readers can browse
 them easier.
 
-*** DONE Better styling :enhancement:
+*** Finished
+**** DONE Better styling :enhancement:
 CLOSED: [2025-08-07 Thu 20:54]
 
 - [X] Especially the footer needs to be smaller
@@ -42,46 +43,46 @@ CLOSED: [2025-08-07 Thu 20:54]
 - [X] Remove CDN
 - [X] Footnotes look ugly
 
-*** DONE Remove index.org from sitemap :bug:
+**** DONE Remove index.org from sitemap :bug:
 CLOSED: [2025-08-07 Thu 00:21]
 
 Currently index.org gets included which is a bit stupid as it means that I list the page itself as a blog post.
 
-*** DONE Correct sort order :bug:
+**** DONE Correct sort order :bug:
 CLOSED: [2025-08-07 Thu 00:21]
 
 For some reason the posts don't show up in order.
 
-*** DONE Disable heading numbers in rss.xml :bug:
+**** DONE Disable heading numbers in rss.xml :bug:
 CLOSED: [2025-08-06 Wed 17:41]
 
 Can be done by configuring the normal org export.
 
 https://mastodon.social/@tiang/114825462665180768
 
-*** DONE Maybe include the sitemap
+**** DONE Maybe include the sitemap
 CLOSED: [2025-07-10 Thu 21:05]
-*** DONE Limit contact page to main page
+**** DONE Limit contact page to main page
 CLOSED: [2025-07-10 Thu 21:05]
-*** DONE Include all previous posts
+**** DONE Include all previous posts
 CLOSED: [2025-07-10 Thu 21:04]
 
 I found some additional posts which I should include as well.
 Just for the fun of it and historic reasons.
 
-*** DONE [#A] Inlcude a link to home
+**** DONE [#A] Inlcude a link to home
 CLOSED: [2025-07-09 Wed 22:36]
 
 Currently when one clicks on a post you're stuck on that post.
 Therefore it would be nice to have a link on each page that takes the user back to the home page.
 
-*** DONE [#A] Setup NixOS config
+**** DONE [#A] Setup NixOS config
 CLOSED: [2025-07-09 Wed 22:35]
-*** DONE [#A] Link to Mastodon verifcation
+**** DONE [#A] Link to Mastodon verifcation
 CLOSED: [2025-07-09 Wed 22:35]
-*** DONE RSS feed
+**** DONE RSS feed
 CLOSED: [2025-07-09 Wed 21:47]
-*** DONE Include static files
+**** DONE Include static files
 CLOSED: [2025-07-07 Mon 22:21]
 
 At the moment only the plain text gets exported but non of the other files like pictures, etc.
