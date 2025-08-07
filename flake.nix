@@ -4,6 +4,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     org-publish-rss.url = "git+https://git.sr.ht/~taingram/org-publish-rss";
     org-publish-rss.flake = false;
+    ox-tufte.url = "github:ox-tufte/ox-tufte";
+    ox-tufte.flake = false;
+    tufte-css.url = "github:edwardtufte/tufte-css";
+    tufte-css.flake = false;
   };
 
   outputs =
@@ -13,6 +17,7 @@
       emacsWithPackages = (pkgs.emacsPackagesFor package).emacsWithPackages;
       finalEmacs = emacsWithPackages (epkgs: [
         epkgs.htmlize
+        epkgs.ox-tufte
         org-publish-rss
       ]);
       pkgs = nixpkgs.legacyPackages."x86_64-linux";
@@ -29,7 +34,11 @@
     {
       packages.x86_64-linux.posts = pkgs.stdenvNoCC.mkDerivation {
         name = "posts";
-        nativeBuildInputs = [ finalEmacs ];
+        nativeBuildInputs = [
+          finalEmacs
+          inputs.ox-tufte
+          inputs.tufte-css
+        ];
         src = ./.;
         phases = [
           "unpackPhase"
@@ -38,6 +47,9 @@
         ];
         buildPhase = ''
           export HOME="''$TMPDIR"
+          mkdir -p public/static/
+          cp -r ${inputs.tufte-css}/* public/static/
+          cp ${inputs.ox-tufte}/src/ox-tufte.css public/static/
           emacs -Q --batch --script ./build-site.el
         '';
         installPhase = ''
@@ -48,10 +60,16 @@
         name = "build";
         runtimeInputs = [
           finalEmacs
+          inputs.ox-tufte
+          inputs.tufte-css
           pkgs.python3
         ];
         text = ''
           rm -fr ./public
+          mkdir -p public/static/
+          cp -r ${inputs.tufte-css}/* public/static/
+          cp ${inputs.ox-tufte}/src/ox-tufte.css public/static/
+          chmod -R +w public/
           emacs -Q --batch --script ./build-site.el
           "$DEFAULT_BROWSER" http://localhost:8000
           python -m http.server -d public

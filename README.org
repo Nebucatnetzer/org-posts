@@ -27,19 +27,20 @@ publish
 #+end_src
 
 ** Tasks
-*** NEXT Better styling :enhancement:
-
-- [X] Especially the footer needs to be smaller
-- [ ] Change colors
-- [ ] The into paragraph could be nicer
-- [ ] Remove CDN
-
+*** NEXT Spellcheck all posts
 *** NEXT Tags :feature:
 
 It would be nice if I could tag my posts by topic so that readers can browse
 them easier.
 
-*** NEXT Spellcheck all posts
+*** DONE Better styling :enhancement:
+CLOSED: [2025-08-07 Thu 20:54]
+
+- [X] Especially the footer needs to be smaller
+- [X] Change colors
+- [X] The into paragraph could be nicer
+- [X] Remove CDN
+- [X] Footnotes look ugly
 
 *** DONE Remove index.org from sitemap :bug:
 CLOSED: [2025-08-07 Thu 00:21]

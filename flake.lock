@@ -32,10 +32,44 @@
         "url": "https://git.sr.ht/~taingram/org-publish-rss"
       }
     },
+    "ox-tufte": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1726752773,
+        "narHash": "sha256-kVAd/Z57UXWA+Cd6hRwOpDm6IDzzzqtbZhN4P3JxwEo=",
+        "owner": "ox-tufte",
+        "repo": "ox-tufte",
+        "rev": "03e6c9e5e0ee467516139ed6b3f2b4bb13f847ec",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ox-tufte",
+        "repo": "ox-tufte",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "nixpkgs": "nixpkgs",
-        "org-publish-rss": "org-publish-rss"
+        "org-publish-rss": "org-publish-rss",
+        "ox-tufte": "ox-tufte",
+        "tufte-css": "tufte-css"
+      }
+    },
+    "tufte-css": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1728375927,
+        "narHash": "sha256-8ztsSxuITc70bHXsVyy3zkgbFYIp8h9tFVfG/ieZUL0=",
+        "owner": "edwardtufte",
+        "repo": "tufte-css",
+        "rev": "c0a7db6a5de4e089b7234d0b93569f9ed71e0f46",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edwardtufte",
+        "repo": "tufte-css",
+        "type": "github"
       }
     }
   },

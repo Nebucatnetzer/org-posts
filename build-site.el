@@ -1,13 +1,15 @@
 (require 'htmlize)
 (require 'org-publish-rss)
 (require 'ox-publish)
+(require 'ox-tufte)
 
 (setopt org-html-html5-fancy t
         org-html-doctype "html5"
         org-html-validation-link nil
         org-html-head-include-scripts nil
         org-html-head-include-default-style nil
-        org-html-head "<link rel=\"stylesheet\" href=\"/static/styles.css\" />
+        org-html-head "<link rel=\"stylesheet\" href=\"/static/tufte.css\" type=\"text/css\" />
+                       <link rel=\"stylesheet\" href=\"/static/ox-tufte.css\" type=\"text/css\" />
                      <link rel=\"alternate\" type=\"application/rss+xml\" title=\"Notes from Andreas Zweili\" href=\"https://2li.ch/rss.xml\" />"
         org-publish-timestamp-directory "./.cache/"
         org-export-with-section-numbers nil
@@ -19,7 +21,7 @@
            :author "Andreas Zweili"
            :auto-sitemap nil
            :base-directory "./posts"
-           :publishing-function org-html-publish-to-html
+           :publishing-function  org-tufte-publish-to-html
            :publishing-directory "./public"
            :with-author nil
            :with-creator t
@@ -70,7 +72,7 @@
 
           ("static"
            :base-directory "./posts/"
-           :base-extension "css\\|txt\\|jpg\\|gif\\|png"
+           :base-extension "txt\\|jpg\\|gif\\|png"
            :recursive t
            :include ("rss.xml")
            :publishing-directory  "./public/"
