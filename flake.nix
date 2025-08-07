@@ -36,8 +36,6 @@
         name = "posts";
         nativeBuildInputs = [
           finalEmacs
-          inputs.ox-tufte
-          inputs.tufte-css
         ];
         src = ./.;
         phases = [
@@ -60,8 +58,6 @@
         name = "build";
         runtimeInputs = [
           finalEmacs
-          inputs.ox-tufte
-          inputs.tufte-css
           pkgs.python3
         ];
         text = ''
