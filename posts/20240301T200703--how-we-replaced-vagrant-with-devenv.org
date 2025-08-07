@@ -108,7 +108,7 @@ The advantage of this is that you know exactly what you need to run an applicati
 Because of these limitations, we discovered
 - Missing configurations that are available by default on an Ubuntu system.
 - Missing packages that we didn't specifically install on Ubuntu, but that were present and used by our application.
-- Hard-coded paths to binaries in `/usr/bin/`.
+- Hard-coded paths to binaries in =/usr/bin/=.
 
 We also discovered many hard-coded paths where our application expected to find itself.
 These were discovered because we were now running our application in any directory we wanted.
