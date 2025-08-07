@@ -92,10 +92,13 @@ They don't get included automatically by org-publish therefore I had to included
 ** Resources
 
 - https://www.gnu.org/software/emacs/manual/html_node/org/Publishing-options.html
+- https://github.com/Fuco1/.emacs.d/blob/c40209872174ffbf4e9024793e86c25f6e0781cd/files/org-blog.el#L226C1-L231C60
+- https://git.sr.ht/~taingram/org-publish-rss/
+- https://github.com/ox-tufte/ox-tufte
+- https://github.com/edwardtufte/tufte-css
 
 *** Inspiration
 
 - https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/
 - https://systemcrafters.net/publishing-websites-with-org-mode/automated-site-publishing/
 - https://taingram.org/blog/org-mode-blog.html
-- https://git.sr.ht/~taingram/org-publish-rss/
