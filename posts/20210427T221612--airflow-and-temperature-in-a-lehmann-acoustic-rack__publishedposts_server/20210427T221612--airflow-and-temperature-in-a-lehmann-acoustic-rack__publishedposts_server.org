@@ -17,7 +17,7 @@ Another benefit which I haven't thought about before is that I have now all my e
 The rack sits right next to the balcony door which isn't ideal when it comes to having a dust free environment for the servers.
 I thought it would be a good idea to get dust filters for the cabinet so that I wouldn't have to vacuum the servers all the times.
 Therefore I bought magnetic filters by DEMCiflex[fn:2].
-The first problem, altough a small one, was that they weren't sticking to the rack on their own.
+The first problem, although a small one, was that they weren't sticking to the rack on their own.
 This was partially because of the protection grills in front of the fans and partially because the magnets aren't strong enough.
 Because even after I've removed the grills they didn't stick very well.
 When I applied the included magnet strips they remained attached to the cabinet.
@@ -25,7 +25,7 @@ When I applied the included magnet strips they remained attached to the cabinet.
 * Temperature in relation to airflow
 
 Because it was the first sunny day after I had installed the rack I wanted to check how the temperature was inside of it.
-I applied the top filters without the magnet strips a while ago so I was used to seeing temperatures of around 29 degrees Celcius.
+I applied the top filters without the magnet strips a while ago so I was used to seeing temperatures of around 29 degrees Celsius.
 However when I applied all the fans with the magnet strips I was quickly getting temperatures of around 33 degrees Celsius.
 I first removed the top filters because I reckoned that they would block the warm air from escaping out of the case now that they were properly attached to the case.
 As it turned out that was true, the temperature dropped back to 29 degrees like I was used to.
@@ -45,6 +45,6 @@ Even when the air isn't fully blocked.
 
 * Footnotes
 
-[fn:1] https://www.lehmann-it.eu/en/19-inch-server-cabinets/19-inch-office-racks/19-office-rack-akustik-12-he-600x900x660-silent.html
+[fr:1] https://www.lehmann-it.eu/en/19-inch-server-cabinets/19-inch-office-racks/19-office-rack-akustik-12-he-600x900x660-silent.html
 
 [fn:2] https://www.digitec.ch/de/s1/product/demciflex-demciflex-pc-luefter-zubehoer-280892

@@ -7,7 +7,7 @@
 #+LATEX_HEADER: \input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
 :END:
 
-GNU/Stow is a handy little utily designed to symlink programms built from
+GNU/Stow is a handy little utility designed to symlink programs built from
 source to their correct place which makes it easier to keep track of them.
 
 However it's also a very handy tool if you want to backup your config files

@@ -10,7 +10,7 @@ This is an old setup which I don't use anymore. Syncthing has gotten
 much better and works now good enough for my needs.
 
 ** The Problem
-Since I've began using org-mode extensivly I thought it would be nice to
+Since I've began using org-mode extensively I thought it would be nice to
 be able to view the files on my Android device. There is a nice app
 called Orgzly which you can get from the PlayStore or the F-Droid
 repository. However Orgzly doesn't include the ability to sync the org
@@ -75,7 +75,7 @@ exit 0
 #+end_src
 
 This adds the current time and date to a log file in the Termux home
-directory and pulls in the newest commmits from my notes repository.
+directory and pulls in the newest commits from my notes repository.
 Since Termux works slightly different than a normal Linux environment we
 need to execute one last command.
 
@@ -83,11 +83,11 @@ need to execute one last command.
 termux-fix-shebang .termux/tasker/sync-notes.sh
 #+end_example
 
-This will correct the sheband =#!/bin/bash= to one that works with
+This will correct the shebang =#!/bin/bash= to one that works with
 Termux.
 
 *** Setting up Tasker
-Setting up Tasker quite easily done. I'm going to asume that your
+Setting up Tasker quite easily done. I'm going to assume that your
 familiar with Tasker and explain only the parts specific to Termux and
 Orgzly. In general I just created a Profile which executes the sync task
 every 3 hours.

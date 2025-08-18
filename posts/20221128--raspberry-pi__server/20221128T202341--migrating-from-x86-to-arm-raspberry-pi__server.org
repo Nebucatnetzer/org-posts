@@ -15,20 +15,20 @@ with a bunch of Raspberry Pis.
 ** Noise
 I live in a small apartment and the server is stationed in my living
 room. For a long time I had the server hidden under my couch. This
-worked but the noise was quite notable. A few years ago I bought a rack
+worked, but the noise was quite notable. A few years ago I bought a rack
 which is specifically designed to block noise which helped quite a bit.
-However it still produced some noise because of the three fans in its
-walls. In addition I thought that it might still leak some sound from
-the server fans but this turned out to be not true. The volume stayed
+However, it still produced some noise because of the three fans in its
+walls. In addition, I thought that it might still leak some sound from
+the server fans, but this turned out to be not true. The volume stayed
 the same after I powered of the server.
 
 So I hoped that I would be able to power off the fans once I switched to
 passively cooled Raspberry Pis. As it turned out this isn't possible.
 The heat inside the rack gets too much without the fans running. The
-firewall got up to over 70 degrees Celsius. It might work out but it's
+firewall got up to over 70 degrees Celsius. It might work out, but it's
 better for the longevity of the devices and the performance to keep the
 fans running. The Raspis are far less likely to throttle when properly
-cooled. Luckily they are not that loud and not as high pitched as the
+cooled. Luckily they are not that loud and not as high-pitched as the
 server fans.
 
 ** Heat and power consumption
@@ -38,22 +38,22 @@ server to it really doesn't help to cool it down.
 
 The temperature in my flat is usually around 23 - 24 degrees. With the
 Raspberry Pis it's now around 21 - 22 degrees. So already quite a bit
-lower and I can really feel the difference in air temperature coming out
+lower, and I can really feel the difference in air temperature coming out
 of the rack. We will see how well it works during the hot days. After
 all the devices inside the rack are still producing some heat.
 
 As for the power consumption, I never really measured the Dell server.
-However it was a dual socket system so easily around 100 W. In an
+However, it was a dual socket system so easily around 100 W. In an
 initial test a Pi used between 3 - 4 Watts of power while idling and a
 bit under 8 Watts under full load. This was before I disabled Bluetooth
-and WiFi on all of them so they should consume now around 2 - 3 Watts in
-idle[fn:1] .
+and Wi-Fi on all of them so they should consume now around 2 - 3 Watts in
+idle[fn:1].
 
 ** Repairs and transparent costs.
 I know you can get used servers fairly cheap or even for free (the Dell
-machine is such a server). However if you really want to be on the safe
+machine is such a server). However, if you really want to be on the safe
 side you should have two. The second one being for spare parts in case
-something breaks. Otherwise you have to be lucky to find the replacement
+something breaks. Otherwise, you have to be lucky to find the replacement
 parts when you need them.
 
 Granted, with the current situation you have basically the same problem
@@ -67,14 +67,14 @@ a replacement might cost me.
 
 ** Learning
 Obviously the setup with the x86 server was much more flexible. I used
-Proxmox as the hypervisor so I just could spin up a new VM, test
+Proxmox as the hypervisor, so I just could spin up a new VM, test
 something and if I didn't need it, I could just destroy it again. The
 backup and snapshot functionally are very helpful as well.
 
-The Raspberry Pi setup doesn't have this luxury but it forces me to try
+The Raspberry Pi setup doesn't have this luxury, but it forces me to try
 new things and solve the various problems. After all I'm doing this not
 just to improve my privacy but to learn something new as well. I'm
-especially looking forward to do all this with NixOS since it has
+especially looking forward to, to do all this with NixOS since it has
 various ways how you can quickly test something without having to
 install it permanently.
 
@@ -82,26 +82,32 @@ install it permanently.
 ** Hardware
 I got a very nice rack mount from a friend. It has fourteen slots from
 which I'm currently using ten. One holding the spare Pi. The rack mount
-is open source, the source can be found in the foot note[fn:2].
+is open source, the source can be found in the footnote[fn:2].
 
 #+caption: rack.jpg
 [[file:rack.jpg]]
 
 ** Software
 For the OS I chose NixOS because it is currently the distribution that I
-like using the most. In addition it uses very little resources. This way
+like using the most. In addition, it uses very little resources. This way
 I don't waste any resources on something I don't really need.
 
-Currently I'm hosting the following services: - Nextcloud - TT-RSS + RSS
-Bridge - Docker-Mailserver - Grav (this blog) - Gitea - Plex - PiHole -
-Heimdall
+Currently, I'm hosting the following services:
+- Docker-Mailserver
+- Gitea
+- Grav (this blog)
+- Heimdall
+- Nextcloud
+- PiHole
+- Plex
+- TT-RSS + RSS-Bridge
 
 *** Docker and Host Services
 #+caption: diagram.png
 [[file:diagram.png]]
 
 All of these services are running in a Docker container. I might switch
-some of them back to native applications but currently I don't want to
+some of them back to native applications, but currently I don't want to
 mess around with applications and their dependencies. What I did however
 is migrate away from =docker-compose= and use the NixOS
 =virtualisation.oci-containers= option to define the containers. A lot
@@ -110,7 +116,7 @@ features. For example, the automatic network configuration is missing.
 To solve this I had to write a =system.activationScript= to create the
 network at boot if it was missing[fn:3].
 
-In addition I stopped using DBs in containers and migrated back to using
+In addition, I stopped using DBs in containers and migrated back to using
 the OS packages. It's IMO just easier to administrate and backup them
 this way. For all of my DBs I implement a backup solution with Restic. A
 systemd service triggered by a timer dumps the DB data into Restic via
@@ -121,7 +127,7 @@ container. With this option your database is reachable under
 "host.docker.internal" from within the container. So you don't have to
 use the IP which might change.
 
-Since it's very easy to use Nginx with Let's Encrpyt, I stopped using
+Since it's very easy to use Nginx with "Let's Encrpyt", I stopped using
 Traefik for this task[fn:5]. Some applications are even using Nginx to
 forward requests to PHP-FPM running inside the container[fn:6].
 
@@ -131,14 +137,14 @@ I don't have to care too much about the application setup and can update
 as many packages as possible through the system package manager.
 
 ** Raspberry Pi specific changes
-Since my Raspberry Pis are running on SD cards (64GB SanDisk High
+Since my Raspberry Pis are running on SD cards (64 GB SanDisk High
 Endurance Monitoring) I decided to implement some changes in order to
 hopefully increase the lifespan of the SD cards a bit.
 
 I mount =/var/log= to a =tmpfs= meaning a RAM disk. This way logs don't
 get written to the SD cards but stay in RAM. With the Raspberry Pi 4s
-RAM isn't that much of a problem anymore so this is an easy solution. In
-addition I enable =volatile= logs in systemd. As I understood it, this
+RAM isn't that much of a problem anymore, so this is an easy solution. In
+addition, I enable =volatile= logs in systemd. As I understood it, this
 is basically the same but for all the logs which get stored in the
 systemd journal[fn:7]. The drawback is that the logs are lost when you
 restart the Pi. To help with this I send all the logs to my NAS which
@@ -161,9 +167,9 @@ All the relevant on device data gets backed up with Restic and stored on
 my NAS, an external harddrive and in an offsite OpenStack Swift bucket.
 
 I noticed that the clock in the Raspberry Pis doesn't keep its time
-after a reboot. Therefore I point them all to my firewall which acts as
-the local NTP server for them. In addition I had to make sure that the
-services are only starting after the network is online. Otherwise the
+after a reboot. Therefore, I point them all to my firewall which acts as
+the local NTP server for them. In addition, I had to make sure that the
+services are only starting after the network is online. Otherwise, the
 logs would report a wrong time stamp[fn:11].
 
 Since the Pis don't have that much storage and are a bit constrained
@@ -193,12 +199,12 @@ before I store it on the NAS.
 Other than that it works really great. I can even build custom images
 for each server so that in case of a SD card failure I can just build
 the required image, flash it to a new SD card and depending on the
-system restore the DB and be ready to go again[fn:14]. However this is
+system restore the DB and be ready to go again[fn:14]. However, this is
 more a feature of NixOS than my Pi setup. You can do it with ISOs as
 well. NixOS was in general a huge help with this project because it is
-so easy to configure and reconfigure a system. However it can sometimes
+so easy to configure and reconfigure a system. However, it can sometimes
 take a lot of time to get something working especially if it is a
-software which you haven't used outside of NixOS because you don't know
+software which you haven't used outside NixOS because you don't know
 if you're missing a config in NixOS or using the application the wrong
 way.
 
