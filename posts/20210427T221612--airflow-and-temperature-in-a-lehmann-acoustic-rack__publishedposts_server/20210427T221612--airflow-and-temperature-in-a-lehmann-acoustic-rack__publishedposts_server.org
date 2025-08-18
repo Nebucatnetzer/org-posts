@@ -45,6 +45,6 @@ Even when the air isn't fully blocked.
 
 * Footnotes
 
-[fr:1] https://www.lehmann-it.eu/en/19-inch-server-cabinets/19-inch-office-racks/19-office-rack-akustik-12-he-600x900x660-silent.html
+[fn:1] https://www.lehmann-it.eu/en/19-inch-server-cabinets/19-inch-office-racks/19-office-rack-akustik-12-he-600x900x660-silent.html
 
 [fn:2] https://www.digitec.ch/de/s1/product/demciflex-demciflex-pc-luefter-zubehoer-280892
