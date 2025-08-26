@@ -80,11 +80,11 @@
         ];
         text = ''
           # shellcheck source=/dev/null
-          nix build .#posts
+          built_files=$(nix build --no-link --print-out-paths .#posts)
           source .env
           echo "Syncing posts to $BLOG_SERVER:$BLOG_DIRECTORY"
           ssh "$BLOG_SERVER" "mkdir -p $BLOG_DIRECTORY"
-          rsync --delete --archive --verbose --checksum result/ "$BLOG_SERVER":"$BLOG_DIRECTORY"/
+          rsync --delete --archive --verbose --checksum "$built_files"/ "$BLOG_SERVER":"$BLOG_DIRECTORY"/
         '';
       };
 
