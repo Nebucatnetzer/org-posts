@@ -15,6 +15,37 @@
         org-export-with-section-numbers nil
         )
 
+(defun az/org-html-blog-footer (_info)
+  "Return a footer html for org-html export, conditional on BLOG_COMMENTS_THREAD_ID."
+  (let* ((thread-id (org-element-map (org-element-parse-buffer)
+                        'keyword
+                      (lambda (el)
+                        (when (string= (org-element-property :key el) "BLOG_COMMENTS_THREAD_ID")
+                          (org-element-property :value el)))
+                      nil t)))
+    (concat
+     (when thread-id
+       (format
+        ;; Comment section
+        "<section class=\"outline-2\">
+         <h2>Comments</h2>
+         <div class=\"outline-text-2\">
+         <p>With an account on the Fediverse or Mastodon, you can respond to this post <a href=\"https://social.linux.pizza/@nebucatnetzer/%s\">here</a>. Since Mastodon is decentralized, you can use your existing account hosted by another Mastodon server or compatible platform if you don't have an account on this one.</p>
+         </div>
+         </section>" (org-html-encode-plain-text thread-id)))
+
+     ;; Actual footer
+     "<div>
+      <a href=\"https://www.2li.ch\">Notes</a> © 2025 by <a
+         href=\"https://social.linux.pizza/@nebucatnetzer\">Andreas Zweili</a> is licensed under <a
+         href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0
+      </a>
+      </div>
+      <div class=\"generated\">
+      Created with Emacs on <a href=\"https://www.gnu.org\">GNU</a>/<a href=\"https://www.kernel.org/\">Linux</a>
+      </div>"
+     )))
+
 (setopt org-publish-project-alist
         `(("posts"
            :recursive t
@@ -30,19 +61,7 @@
            :time-stamp-file nil
            :html-link-home "https://www.2li.ch"
            :html-link-up "/"
-           :html-postamble "<footer>
-         <div>
-         <a href=\"https://www.2li.ch\">Notes</a> © 2025 by <a
-            href=\"https://social.linux.pizza/@nebucatnetzer\">Andreas Zweili</a> is licensed under <a
-            href=\"https://creativecommons.org/licenses/by-sa/4.0/\">CC BY-SA 4.0
-         </a>
-         </div>
-
-         <div class=\"generated\">
-         Created with %c on <a href=\"https://www.gnu.org\">GNU</a>/<a href=\"https://www.kernel.org/\">Linux</a>
-         </div>
-         </footer>"
-
+           :html-postamble az/org-html-blog-footer
            :auto-rss t
            :rss-title "Andreas Zweili's Blog"
            :rss-description "Blog posts on Free Software, technology, etc."
@@ -72,7 +91,7 @@
 
           ("static"
            :base-directory "./posts/"
-           :base-extension "txt\\|jpg\\|gif\\|png"
+           :base-extension "txt\\|jpg\\|gif\\|png\\|js"
            :recursive t
            :include ("rss.xml")
            :publishing-directory  "./public/"

@@ -26,6 +26,14 @@ To sync the created HTML to the server.
 publish
 #+end_src
 
+*** Link to Mastodon
+
+When you add the following header to a post it will generate a section mentioning Mastodon and will link to the post that belongs to the given ID.
+
+#+begin_src org
+#+BLOG_COMMENTS_THREAD_ID:
+#+end_src
+
 ** Tasks
 *** NEXT Spellcheck all posts
 *** NEXT Tags :feature:
