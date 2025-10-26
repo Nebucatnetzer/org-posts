@@ -34,12 +34,32 @@ When you add the following header to a post it will generate a section mentionin
 #+BLOG_COMMENTS_THREAD_ID:
 #+end_src
 
+*** ~org-social/social.org~
+
+This file contains a template for my org-social posts.
+As I don't want to commit the changes everytime I post something new I disable git tracking for it.
+
+#+begin_src bash
+git update-index --assume-unchanged ./org-social/social.org
+#+end_src
+
+To re-enable the tracking
+
+#+begin_src bash
+git update-index --no-assume-unchanged ./org-social/social.org
+#+end_src
+
 ** Tasks
 *** NEXT Spellcheck all posts
 *** NEXT Tags :feature:
 
 It would be nice if I could tag my posts by topic so that readers can browse
 them easier.
+
+*** NEXT Filter source
+
+Currently everything gets added to the source. I think the Emacs config and the posts would be enought to build the posts.
+This way I don't get a new build everytime I update the social.org file.
 
 *** Finished
 **** DONE Better styling :enhancement:

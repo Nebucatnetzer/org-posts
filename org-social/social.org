@@ -1,0 +1,10 @@
+#+TITLE: Nebucatnetzer's Org Social Posts
+#+NICK: Nebucatnetzer
+#+DESCRIPTION: System engineer from Switzerland. Currently interested in NixOS, Emacs, Python and Metal. In my job I work a lot with Ansible and at home I’m hosting various services on Raspberry Pi 4s running NixOS.
+#+AVATAR: https://zweili.ch/org-social/avatar.png
+#+LINK: https://zweili.ch
+#+CONTACT: https://social.linux.pizza/@nebucatnetzer
+#+GROUP: Emacs https://org-social-relay.andros.dev/
+#+GROUP: Org Mode https://org-social-relay.andros.dev/
+
+* Posts
