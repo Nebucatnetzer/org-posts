@@ -61,6 +61,8 @@ them easier.
 Currently everything gets added to the source. I think the Emacs config and the posts would be enought to build the posts.
 This way I don't get a new build everytime I update the social.org file.
 
+*** NEXT Add a script to only sync social.org
+
 *** Finished
 **** DONE Better styling :enhancement:
 CLOSED: [2025-08-07 Thu 20:54]
