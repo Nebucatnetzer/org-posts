@@ -1,4 +1,5 @@
 #+TITLE: Nebucatnetzer's Org Social Posts
+:preamble:
 #+NICK: Nebucatnetzer
 #+DESCRIPTION: System engineer from Switzerland. Currently interested in NixOS, Emacs, Python and Metal. In my job I work a lot with Ansible and at home I’m hosting various services on Raspberry Pi 4s running NixOS.
 #+AVATAR: https://zweili.ch/org-social/avatar.png
@@ -6,5 +7,311 @@
 #+CONTACT: https://social.linux.pizza/@nebucatnetzer
 #+GROUP: Emacs https://org-social-relay.andros.dev/
 #+GROUP: Org Mode https://org-social-relay.andros.dev/
+#+FOLLOW: https://andros.dev/static/social.org
+#+FOLLOW: https://rossabaker.com/social.org
+#+FOLLOW: https://omidmash.de/social.org
+#+FOLLOW: https://johnhame.link/social.org
+#+FOLLOW: https://eoin.site/social.org
+#+FOLLOW: https://adsan.dev/social.org
+#+FOLLOW: https://cmdln.org/social.org
+#+FOLLOW: https://sachachua.com/social.org
+#+FOLLOW: https://www.alessandroliguori.it/social.org
+#+FOLLOW: https://cherryramatis.xyz/social.org
+#+FOLLOW: https://shom.dev/social.org
+#+FOLLOW: https://comacero.eu/social.org
+#+FOLLOW: https://cybervalley.org/org-social-leandro/org-social.org
+#+FOLLOW: http://gemini.quietplace.xyz/~razzlom/social.org
+#+FOLLOW: https://notxor.nueva-actitud.org/social.org
+#+FOLLOW: https://emillo.net/social.org
+#+FOLLOW: https://www.draketo.de/social.org
+#+FOLLOW: https://codeberg.org/mester/CosasSociales/raw/branch/main/social.org
+#+FOLLOW: https://terroncete.cat/social.org
+#+FOLLOW: https://baldo.cat/social.org
+#+FOLLOW: https://khinsen.net/social.org
+#+FOLLOW: https://wsgregory.us/docs/social.org
+#+FOLLOW: https://luniki.de/social.org
+#+FOLLOW: https://haiverin.scot/social.org
+#+FOLLOW: https://raw.githubusercontent.com/fengbainuo/org-social/refs/heads/main/social.org
+#+FOLLOW: https://zaichuan.net/social.org
+#+FOLLOW: https://www.skrlet13.xyz/social.org
+#+FOLLOW: https://neurolog.dev/social.org
+#+FOLLOW: https://cnoceda.com/social.org
+#+FOLLOW: https://teoten.com/social.org
+#+FOLLOW: https://codeberg.org/eludom/org-social/raw/branch/main/social.org
+#+FOLLOW: https://jackbaty.com/social.org
+#+FOLLOW: https://xlymian.github.io/org-social/social.org
+#+FOLLOW: https://ladykosha.ru/social/social.org
+#+FOLLOW: https://rosaelefanten.org/social.org
+#+FOLLOW: https://www.haiverin.scot/social.org
+#+FOLLOW: https://thesolarprincess.site/social.org
+:end:
 
 * Posts
+** 2025-10-26T16:03:49+0100
+:PROPERTIES:
+:ID: 2025-10-26T16:03:49+0100
+:LANG: en
+:TAGS: emacs org-social
+:CLIENT: org-social.el
+:MOOD:
+:END:
+
+My little hello world on org-social, I find the concept really cool.
+Makes me wonder if there is an asynchronous Mastodon client.
+Humanity should probably build more of these kinds of things.
+
+** 2025-10-27T21:30:44+0100
+:PROPERTIES:
+:ID: 2025-10-27T21:30:44+0100
+:LANG: en
+:TAGS: selfhosted raspberry-pi
+:CLIENT: org-social.el
+:REPLY_TO: https://codeberg.org/eludom/org-social/raw/branch/main/social.org#2025-10-27T15:21:23-0400
+:MOOD:
+:END:
+
+At the moment I'm running the following services on the Pis (more or less one Pi per service):
+- Two [[https://actualbudget.org/][ActualBudget]] instances
+- [[https://freshrss.github.io/FreshRSS/en/][FreshRSS]] + [[https://github.com/RSS-Bridge/rss-bridge][RSS Bridge]]
+- [[https://docs.gitea.com/][Gitea]] (I'm probably going to migrate to Forgejo at some point)
+- Plex
+- Restic server as a backup target for all my Linux devices
+- My "custom search" (the idea was to create a meta search engine, but it is now basically just a frontend for [[https://docs.searxng.org/index.html][SearXNG]])
+- My blog
+
+Up until a few weeks ago I was running a Nextcloud instance and an instance of [[https://github.com/docker-mailserver/docker-mailserver][Docker Mailserver]] on them as well.
+However, it got a bit too much for me and I decided to remove the two most important services.
+I had been running those two for years and just wanted them to be out of the way and working :).
+Nextcloud is now hosted with Hetzner and the mail server is back at Infomaniak, I used them anyway always as an SMTP relay.
+
+** 2025-10-28T21:22:11+0100
+:PROPERTIES:
+:ID: 2025-10-28T21:22:11+0100
+:LANG: en
+:TAGS: git
+:CLIENT: org-social.el
+:REPLY_TO: https://rosaelefanten.org/social.org#2025-10-28T20:24:54+0100
+:MOOD:
+:END:
+
+Git is totally fine, especially in combination with Magit.
+
+** 2025-10-28T21:22:45+0100
+:PROPERTIES:
+:ID: 2025-10-28T21:22:45+0100
+:LANG: en
+:TAGS: gitea
+:CLIENT: org-social.el
+:REPLY_TO: https://andros.dev/static/social.org#2025-10-28T08:42:56+0100
+:MOOD:
+:END:
+
+In general, it is fantastic, love how well it runs even on a Pi.
+But it's probably close to dead since the fork to Forgejo.
+Already witnessed that with Gogs.
+
+** 2025-10-28T21:27:37+0100
+:PROPERTIES:
+:ID: 2025-10-28T21:27:37+0100
+:LANG: en
+:CLIENT: org-social.el
+:REPLY_TO: https://codeberg.org/eludom/org-social/raw/branch/main/social.org#2025-10-28T09:56:40-0400
+:MOOD:
+:END:
+
+#+begin_quote
+Looks interesting.    I tried my hand at writing my own python-based thing, but realized that personal finance is a well-ploughed field and that many problems I didn't even know I had have already been solved so I've been using https://www.gethomebank.org/en/index.php for account management/cash flow for a couple years.
+#+end_quote
+
+Oh, yeah there are many options.
+
+Before ActualBudget I fell into the YNAB trap.
+It is a great software, but the price is just way to steep, and they kept increasing it and are now at $109/year.
+I then tried to use [[https://www.firefly-iii.org/][Firefly III]] for a while, but it didn't sick, I got too used to the envelope budgeting method that YNAB uses.
+Luckily ActualBudget matured enough in the meantime so that I could make the switch three months ago and so far it is going great, I feel like I have my finances under control again.
+
+I often enter new transactions and check if I can afford something on the go, that's why a web based software is key.
+However, HomeBank looks nice, I keep it in mind in case I need an alternative for GNU Cash.
+
+#+begin_quote
+Very cool.  Did not know RSS Bridge existed as a way to create RSS feeds.
+I think I'm entering a phase of re-embracing RSS.   The clutter of UIs on the various sites I read needs to be consolidated.
+
+Using FeedFlow on android, though I suspect I will be cranking back up on elfeed.
+#+end_quote
+
+RSS-Bridge is quite handy but sometimes breaks because sites change stuff.
+
+RSS is the best🤩, I never stopped using it since I started with Google Reader.
+Google killing it was a major motivation for me to start selfhosting stuff.
+- E.g. for noisy news sites I always set up filters, so that I only see the articles that match certain keyworks I'm interested in.
+- YouTube still has RSS feeds for channels.
+- Google Alerts still supports RSS.
+- Mastodon, BlueSky
+
+I've been thinking about using elfeed in combination with FreshRSS but haven't gotten around to that yet.
+Org-Social was more interesting 😅.
+
+#+begin_quote
+Yea.  Was there on one of my Pis.  Then moved it to digital ocean until someone found a way to use my server to distribute their own stuff so I'm currently just on just on codeberg (hence this org-social file), letting others take care some of the ops/security stuff (I spent 20+- years doing "cybersecurity" things .. mostly done with that).
+#+end_quote
+
+Nothing major happened to me yet, appart from getting DoSed by LLMs recently.
+
+#+begin_quote
+I'll have to look into that.   Currently just have a script doing rsync to a couple large USB devices I rotate in and out.
+#+end_quote
+
+I like restic because it does block based deduplication, and you can backup all devices into a single repository, saving even more space.
+BorgBackup is a similar software that a lot of people use.
+My notebook does hourly backups when the server is reachable, which then get stored according to this policy: 25 hourly, 7 daily, 5 weekly, 12 monthly, 2 yearly snapshots
+
+#+begin_quote
+I've bookmarked that, gave it a spin (one of the public servers), will probably try it for a few days for search,
+but (true but maybe not good) I'm finding myself more and more just using ChatGPT (paid account) instead of any search.
+#+end_quote
+
+The public servers aren't that good in my experience as they have different settings than what I would like and often get rate limited by the various search engines.
+Even my home IP now gets rate limited by Reddit because I configured to rank their results higher.
+
+The idea came from Kagi which I really liked, but they are a bit of a shady company, so decided to stop using them and looked for alternatives.
+
+LLMs are a bit hit or miss for me some of the stuff is useful but not enough that I would pay for it.
+
+#+begin_quote
+I have gptel set up inside emacs and keep a running-log and a capture template that uses file+datetree to archive things.
+#+end_quote
+
+Does it learn from the searches or is it just so you can search in the history of the chats?
+
+#+begin_quote
+Where?
+#+end_quote
+
+https://www.zweili.ch/
+
+Sorry forgot that, and I should write a bit more :).
+I just managed this year to finally set up org publishing for it.
+The whole config lives here: https://github.com/Nebucatnetzer/org-posts
+
+#+begin_quote
+I've been on pobox.com/fastmail since 1999.   Works.   At the time I had a CompusServe (first employer) email address that was #####.#####@ format and I wanted an address that would follow me as I invariably migrated back ends (I do have several domains, but I started with pobox.com a LONG time ago and just stuck with it.
+#+end_quote
+
+Hehe, never change a running system.
+Actually impressive that they are still in the business.
+
+#+begin_quote
+I knew I'd find geeks on an org-mode related social network COLON DASH RIGHT-PAREN.
+#+end_quote
+
+Even more so than on Mastodon 😄.
+It's actually a very cool experience.
+One can write replies to multiple posts and then publish everything in one go, very cool.
+
+** 2025-10-28T22:44:57+0100
+:PROPERTIES:
+:ID: 2025-10-28T22:44:57+0100
+:LANG: en
+:CLIENT: org-social.el
+:REPLY_TO: https://rosaelefanten.org/social.org#2025-10-28T20:27:42+0100
+:END:
+
+I feel like this is the total opposite of someone vibe coding a new JavaScript web app 😂.
+
+
+** 2025-10-28T22:47:58+0100
+:PROPERTIES:
+:ID: 2025-10-28T22:47:58+0100
+:CLIENT: org-social.el
+:REPLY_TO: https://plakspin.nl/social.org#2025-10-28T21:41:11+0200
+:MOOD: 👋
+:END:
+
+
+** 2025-10-31T20:04:14+0100
+:PROPERTIES:
+:ID: 2025-10-31T20:04:14+0100
+:LANG: en
+:CLIENT: org-social.el
+:REPLY_TO: https://rosaelefanten.org/social.org#2025-10-29T20:17:20+0100
+:END:
+
+Haven't really used it so can' say what's wrong with it.
+I can say however what is great about Magit.
+
+While Magit makes complex things with Git quite accessible, it doesn't really dumb them down as all of the other programs do.
+Sometimes with GUIs you have to go back to the CLI to do things, with Magit this hasn't been the case yet for me.
+It shows you the CLI options you can apply 1:1 so it actually teaches you stuff while your using it.
+In addition the key chords are amazing and it sometimes feels like an extension of your brain because you can do things so fast.
+
+Sure if there are other programms that can do the same things as Git can do but in a better way that is a good thing to have and I'm curios how for example Jujutsu evolves.
+However they will have to match the level of productivity I get with Magit before I consider switching.
+
+** 2025-10-31T20:18:53+0100
+:PROPERTIES:
+:ID: 2025-10-31T20:18:53+0100
+:LANG: en
+:CLIENT: org-social.el
+:REPLY_TO: https://andros.dev/static/social.org#2025-10-31T08:28:24+0100
+:END:
+
+I discovered this week that Firefox added proper support for PWAs and I wanted to get it to work on my computer.
+Unfortunately I'm only gettign a blank page, so I'm probably going to work on that.
+
+Edit: Got it working, the package needed an update :).
+
+** 2025-11-01T14:31:21+0100
+:PROPERTIES:
+:ID: 2025-11-01T14:31:21+0100
+:LANG: en
+:CLIENT: org-social.el
+:REPLY_TO: https://andros.dev/static/social.org#2025-11-01T11:12:51+0100
+:POLL_OPTION: Continue improving org-social.el
+:END:
+
+But articles would be great as well!
+
+One thing I noticed, (don't know if it is down to the protocol or the client) is that in a thread you don't get notified about replies or replies.
+
+#+begin_example
+1. A post by person A
+  2. My answer
+     3. A reply person B # I get notified about this one
+        4. An additional reply by person C # I don't get notified about this one
+#+end_example
+
+** 2025-11-03T22:23:49+0100
+:PROPERTIES:
+:ID: 2025-11-03T22:23:49+0100
+:LANG: en
+:CLIENT: org-social.el
+:REPLY_TO: https://johnhame.link/social.org#2025-11-03T14:08:29+0000
+:END:
+
+I'm happy to help test this as I've been thinking about hosting a relay server as well.
+
+
+** 2025-11-03T22:32:32+0100
+:PROPERTIES:
+:ID: 2025-11-03T22:32:32+0100
+:LANG: en
+:CLIENT: org-social.el
+:REPLY_TO: https://comacero.eu/social.org#2025-11-03T17:17:13+0100
+:END:
+
+#+begin_quote
+Do you use docker on the raspi?
+#+end_quote
+
+I do on some of them yes, a lot of my services are actually running in a container.
+
+#+begin_quote
+At home I've been trying, only for testing, Proxmox on a Beelink Mini-PC using Proxmox Containers for services.
+#+end_quote
+
+Proxmox is great, I started my selfhosting journey with it and want to go back to it.
+Running everything baremetal on aarch64 was fun for a while, but I want to go back to VMs and x86, it's just less of a hassle.
+
+However, I'm not sure about the hardware yet as the whole idea with the Pis was to have some sort of cost control as each service would cost me roughly $100 to replace the hardware.
+Previously I was running old hardware from work which I would never be able to replace in case of a serious hardware failure.
