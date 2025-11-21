@@ -5,6 +5,7 @@
 #+identifier: 20251121T134529
 #+author: Andreas Zweili
 #+latex_header: input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+#+BLOG_COMMENTS_THREAD_ID: 115588032719879228
 :end:
 
 /I first posted this on reddit and thought I should post it here as well because it took me some time to write./
