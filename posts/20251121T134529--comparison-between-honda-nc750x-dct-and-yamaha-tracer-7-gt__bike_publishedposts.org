@@ -1,0 +1,64 @@
+#+title: Honda NC750X DCT vs Yamaha Tracer 7 GT
+:preamble:
+#+date: [2025-11-21 Fri 13:45]
+#+filetags: :bike:publishedposts:
+#+identifier: 20251121T134529
+#+author: Andreas Zweili
+#+latex_header: input{~/nextcloud/99_archive/0000/settings/latex/style.tex}
+:end:
+
+/I first posted this on reddit and thought I should post it here as well because it took me some time to write./
+
+As I was looking for this information myself, I thought I would post it now that I experienced it.
+
+I was looking for a new motorcycle.
+Specifically for an automatic one because I was fed up with shifting gears when I was commuting or driving through a city, which is the majority of my driving.
+I try to do one longer tour of about one week each year and every now and then, one on a weekend.
+
+Because of my driving licence, I’m currently not allowed to drive a bike with more than 35 kW, so keep this in mind for this comparison as it might affect the performance of the bikes.
+
+Due to availability, I had to mix the Yamaha bikes a bit.
+I test drove the MT-07 with Y-AMT to get a feel for the automatic gearbox and the Tracer 7 2025 without Y-AMT to get a feel for the bike.
+The Honda dealer didn’t want to let me try the 2025 version and only gave me 15 minutes on the 2024 version.
+So I didn’t have much time to play around with modes and such.
+
+In general, I find both automatic systems fantastic.
+I tested them both in rush hour, and it was great to be able to focus fully on the traffic.
+
+- The Y-AMT is the more prominent of two systems. You can feel it shifting,
+  especially in the lower gears, but to me that wasn’t really a problem as it
+  isn’t like you release the clutch too fast. Just like lower gears feel on a
+  manual bike, and it gets smoother in the upper gears. The main thing I
+  noticed was when I was driving from an 80km/h into a 50km/h zone. I’m used to
+  shifting down before the sign and engine break into the zone. The computer
+  doesn’t know this and can’t read signs so it took me a bit by surprise as I
+  tried to engine brake into 6th gear. I'm sure this would be the same on the
+  Honda but I wasn't able to test it in such a short time.
+- The one from Honda, you don’t notice at all if you don’t pay attention. It
+  happened more than once that I looked at the display and saw that it already
+  shifted another gear. Other than that there is not much more to tell. It just
+  works™.
+
+As for the bikes. They are very different, but neither is a bad bike.
+
+- The Honda was very predictable, smooth and gets out of your way. It feels as
+  if it really likes to stay upright and balancing it in slow traffic is a
+  piece of cake. I’m really surprised that it still doesn’t come with cruise
+  control, as that would be a match made in heaven. The riding position felt a
+  bit awkward and forward leaning. Not like a racer but still weird. The engine
+  is, as you can read everywhere, really low reving. In general, I didn’t find
+  the engine that noticeable, it was there and did its job. If you really want
+  it to, it can go fast, but in standard mode it is very relaxed. About the
+  same as my current 500cc/32kW adventure bike.
+- The Tracer 7 on the other hand felt very agile and like it wants to be let
+  loose in the twisties. The engine delivers its power very quickly and punchy.
+  Even when restricted to 35 kW, it feels like a major upgrade in power
+  compared to my current bike. The riding position felt better to me than the
+  Honda. One small thing that I noticed but really like is that there is plenty
+  of space next to the right foot peg.
+
+I first tested the Tracer a few weeks back and then tested the Honda yesterday and Tracer again right after the Honda.
+After sitting the second time on the Tracer and having the direct comparison with the Honda, I immediately knew which bike would be the right one for me and signed the contract for the Tracer.
+The Honda is a good bike, but it goes so much out of your way that you forget it is there.
+I’m sure there is a market for this, but it isn’t for me.
+The Yamaha puts a smile on my face every time I pull the throttle, and I see myself having a great time with it on longer tours.
